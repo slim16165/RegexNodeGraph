@@ -1,0 +1,2351 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PostSharp.Patterns.Model</name>
+    </assembly>
+    <members>
+        <member name="T:PostSharp.Patterns.Model.AggregateAllChangesAttribute">
+            <summary>
+            Custom attribute that, when applied to a property of a class enhanced with the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/>, 
+            specifies that a change of any property of the property value will be considered as a change of the property itself.
+            </summary>
+            <remarks>
+            <para>This attribute can currently only be used on properties of types derived from <see cref="T:System.Collections.ICollection"/> or <see cref="T:System.Collections.Generic.ICollection`1"/>,
+            and only notifications of the property named <c>Item[]</c> will currently be considered.</para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.ChildPropertyChangedEventArgs">
+            <exclude/>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.Depends">
+            <summary>
+            Provides a way to specify dependencies of a method to properties or chains of properties. This class
+            should be used from methods marked with the <see cref="T:PostSharp.Patterns.Model.SafeForDependencyAnalysisAttribute"/> custom attribute.
+            </summary>
+            <remarks>
+                <para>Members of this class are considered metadata-only. They are used only at build time, where
+            their arguments are decompiled. They have no runtime effect. For performance reason, it is preferable to
+            skip their runtime execution. This can be achieved by using the <see cref="F:PostSharp.Patterns.Model.Depends.Guard"/> field in the construct:
+            </para>
+            <code>
+              if ( Depends.Guard )
+              {
+                Depends.On(this.foo.Bar);
+              }
+            </code>
+            </remarks>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.Depends.Guard">
+            <summary>
+            A <see cref="T:System.Boolean"/> value that is always <c>false</c>.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the argument passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+            <param name="dependency5"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+            <param name="dependency5"></param>
+            <param name="dependency6"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+            <param name="dependency5"></param>
+            <param name="dependency6"></param>
+            <param name="dependency7"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+            <param name="dependency5"></param>
+            <param name="dependency6"></param>
+            <param name="dependency7"></param>
+            <param name="dependency8"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+            <param name="dependency5"></param>
+            <param name="dependency6"></param>
+            <param name="dependency7"></param>
+            <param name="dependency8"></param>
+            <param name="dependency9"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.Depends.On(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Specifies an explicit dependency between the calling method and the arguments passed to this method.
+            </summary>
+            <param name="dependency1"></param>
+            <param name="dependency2"></param>
+            <param name="dependency3"></param>
+            <param name="dependency4"></param>
+            <param name="dependency5"></param>
+            <param name="dependency6"></param>
+            <param name="dependency7"></param>
+            <param name="dependency8"></param>
+            <param name="dependency9"></param>
+            <param name="dependency10"></param>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.DisposableAttribute">
+            <summary>
+            Custom attribute that, when applied to a class, implements the <see cref="T:System.IDisposable"/> in such a way that
+            the <see cref="M:System.IDisposable.Dispose"/> method executes the <see cref="M:System.IDisposable.Dispose"/> method for all
+            children objects that also implement the <see cref="T:System.IDisposable"/> interface.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.DisposableAttribute.ThrowObjectDisposedException">
+            <summary>
+            Determines whether an <see cref="T:System.ObjectDisposedException"/> should be thrown when an attempt is made
+            to access an object that has already been disposed.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.DisposableAttribute.Advise(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.DisposableAttribute.IsEligibleChild(System.Object,PostSharp.Patterns.Model.ChildInfo)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.DisposableAttribute.OnAdviseChildFailed(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="F:PostSharp.Patterns.Model.DisposableAttribute.BaseDisposeMethod">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.DisposableAttribute.DisposeMethod">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.DisposableAttribute.Dispose(System.Boolean)">
+            <exclude />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.DisposableAttribute.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.DisposableAttribute.OnMethodEntry(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.IgnoreAutoChangeNotificationAttribute">
+            <summary>
+            Custom attribute that, when applied to a property, prevents the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect
+            to raise change notifications for this property.
+            </summary>
+            <remarks>
+            <para>
+            This means that if you change the value of that property, the <c>PropertyChanged</c> event will not be raised.
+            </para>
+            <para>
+            For historical reasons, you can also apply this attribute to a method, but doing so results in a build-time error.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.IgnoreAutoChangeNotificationAttribute.CompileTimeValidate(System.Object)">
+            <exclude/>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.INotifyChildPropertyChanged">
+            <exclude/>
+        </member>
+        <member name="E:PostSharp.Patterns.Model.INotifyChildPropertyChanged.ChildPropertyChanging">
+            <exclude/>
+        </member>
+        <member name="E:PostSharp.Patterns.Model.INotifyChildPropertyChanged.ChildPropertyChanged">
+            <exclude/>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.INotifyPropertyChangedController">
+            <summary>
+            Lets raise PropertyChanged and ChildPropertyChanged events
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute">
+            <summary>
+            Custom attribute that, when applied on a type, implements the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface for this class and all children classes.
+            </summary>
+            <remarks>
+                <para>The aspect analyzes dependencies between property getters and fields. The aspect understands indirect dependencies. For instance, a property
+            getter may depend on several other methods or property getters, which in turn can depend on other methods or fields. The algorithm is not able
+            to analyze calls to virtual methods or delegates (because of prohibitive computational cost), and will only try to analyze methods in the current class.
+            </para>
+            <para>
+                The aspect will emit a build-time error if it is not able to understand the code of the target class. In this case, you can exclude the property from
+            automatic change notification by applying the <see cref="T:PostSharp.Patterns.Model.IgnoreAutoChangeNotificationAttribute"/> custom attribute to the problematic property, or
+            <see cref="T:PostSharp.Patterns.Model.SafeForDependencyAnalysisAttribute"/> to ignore the warnings of the dependency analysis engine. You will then need to specify dependencies explicitly using
+            the <see cref="T:PostSharp.Patterns.Model.Depends"/> class. You can also mark a helper method with the <see cref="T:PostSharp.Patterns.Model.PureAttribute"/> to make it safe from use in a property getter.
+            For instance, the <c>string.Format</c> method is pure.
+            </para>
+            <para>
+            By default, the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect holds weak references to the client delegates. This behavior prevents memory leaks
+            if client delegates are not properly removed before client objects are disposed. To cause the aspect to store strong references, set <see cref="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.WeakEventStrategy" /> 
+            property to <see cref="F:PostSharp.Patterns.Model.WeakEventStrategy.AlwaysStrong"/> when applying the aspect. 
+            </para>
+            <para>
+            Target classes can customize the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect by implementing the <c>OnPropertyChanged(string)</c> method manually. If
+            this method is implemented, it must be <c>protected</c> or <c>public</c>.
+            </para>
+            <para>
+            By default, the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect does not call property getters by itself in order to avoid unexpected side-effects. However,
+            this means that there are false positive notifications of property change. To allow aspect to use arbitrary calls to property getters to suppress false positives, set 
+            the <see cref="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PreventFalsePositives"/> property to <c>true</c>.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.genericTypeInstance">
+            <summary>
+            Instance of the generic type
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.analyzer">
+            <summary>
+            Compile-time use only (static)
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.Shared">
+            <summary>
+            Data that is shared between aspect instances.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PreventFalsePositives">
+            <summary>
+            Determines whether the aspect should do additional efforts to prevent the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event from being 
+            raised when the value itself did not change. The default value of this property is <c>false</c>, which means that the aspect will raise the 
+            <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/>  event whenever any dependency of the property has changed, whether the property value has 
+            eventually changed or not. Setting this property to <c>true</c> consumes more memory and processing power because the aspect will need to evaluate 
+            the properties and store their value.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.WeakEventStrategy">
+            <summary>
+            Determines how the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event behaves in terms of keeping weak or strong references. 
+            </summary>
+            <remarks>
+            <p>Setting this property to <see cref="F:PostSharp.Patterns.Model.WeakEventStrategy.Default"/> is equivalent to 
+            <see cref="F:PostSharp.Patterns.Model.WeakEventStrategy.AlwaysWeak"/>.</p> 
+            <p>Setting this property to <see cref="F:PostSharp.Patterns.Model.WeakEventStrategy.AlwaysWeak"/> forces the event to hold only weak references. A 
+            <see cref="T:System.Runtime.CompilerServices.ConditionalWeakTable`2"/> is used to bind the lifetime of the delegate to it's target even if 
+            registering object does not keep a reference to the delegate. This does not prevent the target object from being collected along with the delegate, which 
+            may happen implicitly when a lambda or local function with a closure is used as an event handler. In this case, there is no reference to the closure class 
+            retained.</p>
+            <p>Setting this property to <see cref="F:PostSharp.Patterns.Model.WeakEventStrategy.AlwaysStrong"/> forces the event to hold only strong reference. This may 
+            prevent components that do not support weak event behavior to have subscribed delegates collected. However, it may cause memory leaks if delegates are not 
+            unregistered from the event.</p>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.ExcludeExplicitProperties">
+            <summary>
+            Determines whether the aspect should instrument only automatic properties and ignore any other. This mode allows to use only the abilities
+            of PostSharp Essentials, and prevent the aspect from consuming premium features.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.AdvisedObject">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> class that stores strong references to the client delegates.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Serialization#ISerializationCallback#OnDeserialized">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.RuntimeInitialize(System.Type)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.RuntimeInitializeInstance">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnInstanceConstructed">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.BaseQueryInterface">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.QueryInterfaceMethod">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.QueryInterface(System.Type)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.QueryInterface``1">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnFieldSet``1(PostSharp.Aspects.ILocationBinding{``0},System.Object,``0,PostSharp.Reflection.DeclarationIdentifier)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnPropertyGet``1(PostSharp.Aspects.ILocationBinding{``0},System.Object,``0@,PostSharp.Reflection.DeclarationIdentifier)">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.LocationBindings">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PropertyLocationBindings">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnMethodEntry(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnMethodResume(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnMethodYield(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnMethodExit(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.CompileTimeValidate(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.CompileTimeInitialize(System.Type,PostSharp.Aspects.AspectInfo)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.CreateInstance(PostSharp.Aspects.AdviceArgs)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.InitializeAspectInstance(PostSharp.Aspects.Advices.AspectInitializationReason)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnCloned(PostSharp.Aspects.ICloneAwareAspect)">
+            <inheritdoc />
+        </member>
+        <member name="E:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PropertyChanged">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnPropertyChanged(System.String)">
+            <exclude/>
+        </member>
+        <member name="E:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.ChildPropertyChanged">
+            <exclude/>
+        </member>
+        <member name="E:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.ChildPropertyChanging">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnChildPropertyChanged(PostSharp.Patterns.Model.PropertyPath,System.Boolean)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnChildPropertyChanging(PostSharp.Patterns.Model.PropertyPath,System.Boolean)">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnChildPropertyChangedMethod">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnChildPropertyChangingMethod">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnPropertyChangedMethodOriginal">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnPropertyChangedMethod">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.OnPropertyChangingMethod">
+            <exclude/>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#Instance">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#StorePropertyChanged(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#StorePropertyChanging(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#RaisePropertyChanged(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#RaisePropertyChanging(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#RaiseChildPropertyChanged(PostSharp.Patterns.Model.PropertyPath,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Patterns#Model#INotifyPropertyChangedController#RaiseChildPropertyChanging(PostSharp.Patterns.Model.PropertyPath,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute.PostSharp#Aspects#Advices#IAdviceProvider#ProvideAdvices(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException">
+            <summary>
+            Exception thrown at runtime when the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect encounters
+            an excessively long chain is dependency. This situation is typically caused by a cyclic dependency.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException.#ctor">
+            <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException"/>.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException"/> and sets the exception message.
+            </summary>
+            <param name="message">Exception message.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedOverflowException"/> and sets the exception message and the inner exception.
+            </summary>
+            <param name="message">Exception message.</param>
+            <param name="innerException">Inner exception.</param>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChangedServices">
+            <summary>
+            Utility methods to work with the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangedServices.PropertyChangingAdapter">
+            <summary>
+            Gets or sets currently active <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter"/> object.
+            </summary>
+            <remarks>
+            <para>The adapter form a chain of responsibility. This property represents the head of this chain.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.RaiseEventsImmediate(System.Object)">
+            <summary>
+            Raises all <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> events that are currently stored in the event buffer for the current thread
+            and a given object.
+            </summary>
+            <param name="instance">The object for which events should be raised.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.SuspendEvents">
+            <summary>
+            Suspends the raising of <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> events for the current thread.
+            </summary>
+            <returns><c>true</c> if events were suspended as a result of the current method call, <c>false</c> if events were already suspended before.</returns>
+            <remarks>
+            <para>The <see cref="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.ResumeEvents"/> method should be invoked as many times as the <see cref="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.SuspendEvents"/> method has been invoked,
+            regardless of the return value of the <see cref="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.SuspendEvents"/> method. Failing to do so results in events not being fired at all and potentially in memory leaks
+            as collected events hold strong references.</para>
+            <para>When events are suspended, existing objects have <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> events collected into an event buffer (multiple changes are treated as one).</para>
+            <para>When events are suspended, newly created object do not have <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> events collected.</para>
+            <para>When events are suspended, all object do not have <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> events collected.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.ResumeEvents">
+            <summary>
+            Resumes the raising of <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> events for the current thread after it has been
+            suspending by the <see cref="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.SuspendEvents"/> method.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.SignalPropertyChanged(System.Object,System.String)">
+            <summary>
+            Signals the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event of an object that is instrumented with the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect.
+            </summary>
+            <param name="instance">An instance of a class instrumented with the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect</param>
+            <param name="propertyName">Name of the changed property.</param>
+            <remarks>
+                <para>This methods invokes the <c>OnPropertyChanged</c> method on the <paramref name="instance"/> object. If the method has been defined in user code, it will be invoked.</para>
+                <para>The event is buffered and will actually be raised when the current thread exits the scope of the instance parameter. This methods invokes the <c>OnPropertyChanged</c> method synchronously.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangedServices.SignalPropertyChanging(System.Object,System.String)">
+            <summary>
+            Signals the <c>PropertyChanging</c> event of an object that is instrumented with the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect.
+            </summary>
+            <param name="instance">An instance of a class instrumented with the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect</param>
+            <param name="propertyName">Name of the changed property.</param>
+            <remarks>
+                <para>This methods invokes the <c>OnPropertyChanging</c> method on the <paramref name="instance"/> object. If the method has been defined in user code, it will be invoked.</para>
+                <para>The event is buffered and will actually be raised when the current thread exits the scope of the instance parameter. This methods invokes the <c>OnPropertyChanging</c> method synchronously.</para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.ChildPropertyChangedProcessor">
+            <summary>
+            Main driver of INPC algorithm.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.ChildPropertyChangedProcessor.EventHandlerDescriptor`1">
+            <summary>
+            Class containing reference to event handler and weak ref to its target
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyChangesTracker.suspendedControllers">
+            <summary>
+            Holds controllers that are created during suspension of events. For performance reasons we don't use WeakReference
+            and thus there is a potential memory leak if resume is not properly called.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyFieldBinding">
+            <summary>
+            Represents heuristically identified association of property value with a field.
+            Denotes that the last time the property getter was called it returned value of the field 
+            or Property depends upon only one field of appropriate type.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyFieldBindingsMap">
+            <summary>
+            Storage for <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyFieldBinding"/>s
+            Two way field to property, one to many mapping. 
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyFieldBindingsMap.RefreshPropertyBindings(PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.PropertyLocationRecord,System.Object,System.Object,PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.ChildPropertyChangedProcessor,PostSharp.Patterns.Utilities.LocationBindingCollection)">
+            <summary>
+            Finds fields that holds object returned by the property.
+            Activates bindings to those field and deactivates other bindings.
+            </summary>
+            <param name="propertyLocation"></param>
+            <param name="instance"></param>
+            <param name="currentValue"></param>
+            <param name="childPropertyChangedProcessor"></param>
+            <param name="locationBindings"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyFieldBindingsMap.ResolvePropertyToPropertyDependencies(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},PostSharp.Patterns.Model.NotifyPropertyChanged.ChangeTracking.PropertyFieldBindingsMap)">
+            <summary>
+            Resolves property to property dependencies created with Depend.On.
+            Finds all fields at the end of dependency chains.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.ExplicitDependencyMap">
+            <summary>
+            Map of dependencies built with and <see cref="M:PostSharp.Patterns.Model.Depends.On(System.Object)"/> calls
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.FieldDependenciesMap.FieldDependentProperties">
+            <summary>
+            Dictionary with a list of dependent properties for each instrumented field
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.InpcSerializationStore">
+            <summary>
+            class used to store static data between compile time and runtime
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.PropertiesDependenciesAnalyzer">
+            <summary>
+            Performs static code analysis to determine property dependencies. 
+            Stores two global maps: 
+            1. mapping of a method to fields that the method depends on, 
+            2. mapping of a field to properties that depend upon the field. 
+            For each analyzed type analyzer returns <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.ExplicitDependencyMap"/> build based on <see cref="M:PostSharp.Patterns.Model.Depends.On(System.Object)"/> methods.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.PropertiesDependenciesAnalyzer.MethodFieldDependencies">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChanged.DependencyAnalysis.PropertiesDependenciesAnalyzer.FieldDependentProperties">
+            <summary>
+            List of properties depending on a given field
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter">
+            <summary>
+            Provides a unified adapter to the different variants of the <c>INotifyPropertyChanging</c> interface.
+            </summary>
+            <remarks>
+            <para>To register your <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter"/>, set the <see cref="P:PostSharp.Patterns.Model.NotifyPropertyChangedServices.PropertyChangingAdapter"/> property.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter.#ctor(PostSharp.Patterns.Model.NotifyPropertyChangingAdapter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter"/> class.
+            </summary>
+            <param name="next">Next item in the chain of responsibility. Pass the current value of the <see cref="P:PostSharp.Patterns.Model.NotifyPropertyChangedServices.PropertyChangingAdapter"/> property to this parameter.</param>
+        </member>
+        <member name="P:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter.Next">
+            <summary>
+            Gets the next <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter"/> in the chain.
+            </summary>
+            <remarks>
+            <para>This property is never <c>null</c>.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter.AddHandler(System.Object,System.Action{System.String})">
+            <summary>
+            Adds a handler to PropertyChanging event.
+            </summary>
+            <param name="instance">Instance.</param>
+            <param name="handler">Handler delegate that receives property name as an argument.</param>
+            <returns><see cref="T:System.Delegate" /> that was registered to the event or <value>null</value> if instance does not implement the represented interface.</returns>
+            <remarks>
+            <para>An implementation should never return <c>null</c>, instead it should return the result of <c>this.Next.AddHandler</c>.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter.RemoveHandler(System.Object,System.Delegate)">
+            <summary>
+            Removes a handler from PropertyChanging event.
+            </summary>
+            <param name="instance">Instance.</param>
+            <param name="handler">Delegate that was registered to the event.</param>
+            <returns><c>true</c> if instance implements the represented interface, <c>false</c> otherwise.</returns>
+            <remarks>
+            <para>An implementation should never return <c>false</c>, instead it should return the result of <c>this.Next.RemoveHandler</c>.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.NotifyPropertyChangingAdapter.IsSupported(System.Object)">
+            <summary>
+            Determines whether the <c>NotifyPropertyChanging</c> behavior is supported for a given object.
+            </summary>
+            <param name="instance">Instance.</param>
+            <returns><c>true</c> if <paramref name="instance"/> is supported, otherwise <c>false</c>.</returns>
+            <remarks>
+            <para>An implementation should never return <c>false</c>. Instead, it should return the result of <c>base.IsSupported</c>.</para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.PropertyPath">
+            <summary>
+            Immutable property path with all components interned.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.PropertyPath.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.PropertyPath.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Model.PropertyPath.Equals(PostSharp.Patterns.Model.PropertyPath)">
+            <summary>
+            Determines whether the current <see cref="T:PostSharp.Patterns.Model.PropertyPath"/> is equal to another.
+            </summary>
+            <param name="other">Another <see cref="T:PostSharp.Patterns.Model.PropertyPath"/>.</param>
+            <returns><c>true</c> if the current <see cref="T:PostSharp.Patterns.Model.PropertyPath"/> equals <paramref name="other"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.PropertyPath.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Model.PureAttribute">
+            <summary>
+            Custom attribute that, when applied on a method, specifies that this method is a pure function, i.e. the method always
+            returns the same result given the same parameter values. In the context of <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/>,
+            it is also assumed that pure functions have only parameters of primitive types (<see cref="T:System.Int32"/>, <see cref="T:System.String"/>, ...).
+            The <see cref="T:System.Object"/> parameter type is also accepted, but then it is assumed that instances passed are immutable
+            (and changes to these objects will not be tracked).
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.PureAttribute.CompileTimeValidate(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Model.RecursionFriendlyLinkedList`1">
+            <summary>
+            Linked list that is capable of fast removal of items and multiple enumerations during recursion, while changing the collection.
+            </summary>
+            <typeparam name="TData">Data type.</typeparam>
+            <remarks>Not thread-safe at all.</remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.RecursionFriendlyLinkedList`1.NodeEnumerator">
+            <summary>
+            Enumerator of nodes. It is public so it's methods can be called using .call instead of .callvirt.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.SafeForDependencyAnalysisAttribute">
+            <summary>
+            Custom attribute that, when applied on a property, prevents the dependency analysis algorithm used by the
+            <see cref="T:PostSharp.Patterns.Model.NotifyPropertyChangedAttribute"/> aspect from emitting errors when it encounters constructs
+            that it cannot analyze. 
+            </summary>
+            <remarks>
+            <para>Getters of properties annotated with <see cref="T:PostSharp.Patterns.Model.SafeForDependencyAnalysisAttribute"/> should typically
+            specify dependencies manually using the <see cref="T:PostSharp.Patterns.Model.Depends"/> class. Note that all dependencies that can be
+            found using code analysis will be taken into account. The <see cref="T:PostSharp.Patterns.Model.SafeForDependencyAnalysisAttribute"/> only
+            disables errors, but not the code analysis itself.</para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.WeakEventAttribute">
+            <summary>
+                Aspect that, when applied to an event, prevents the target event from holding a strong reference to event handlers.
+                Therefore, the aspect prevents the event to prevent clients to be garbage collected.
+            </summary>
+            <remarks>
+            <para>Event clients do not need to keep a strong reference to the delegates passed to a weak event. The <see cref="T:PostSharp.Patterns.Model.WeakEventAttribute"/> implementation
+            will keep delegate instances alive as long as the event source (i.e. whatever object the <see cref="P:System.Delegate.Target"/> property points to) is alive, but no longer.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.PostSharp#Aspects#IInstanceScopedAspect#CreateInstance(PostSharp.Aspects.AdviceArgs)">
+             <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.PostSharp#Aspects#IInstanceScopedAspect#RuntimeInitializeInstance">
+             <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.RuntimeInitialize(System.Reflection.EventInfo)">
+             <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.OnAddHandler(PostSharp.Aspects.EventInterceptionArgs)">
+             <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.OnRemoveHandler(PostSharp.Aspects.EventInterceptionArgs)">
+             <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Model.WeakEventAttribute.OnInvokeHandler(PostSharp.Aspects.EventInterceptionArgs)">
+             <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.WeakEventHandler`3.invoker">
+            <summary>
+            Invoker used for early-bound invocation of the delegate type.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Model.WeakEventStrategy">
+            <summary>
+            Defines behavior of a weak event.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.WeakEventStrategy.Default">
+            <summary>
+            Default behavior.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.WeakEventStrategy.AlwaysWeak">
+            <summary>
+            Always keep weak references.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Model.WeakEventStrategy.AlwaysStrong">
+            <summary>
+            Always keep strong references.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.EditableObjectAttribute">
+            <summary>
+            Custom attribute that, when applied to a class, implements <see cref="T:System.ComponentModel.IEditableObject"/> into this class.
+            </summary>
+            <remarks>
+            <para>This aspect implicitly adds the <see cref="T:PostSharp.Patterns.Recording.RecordableAttribute"/> aspect to the target class, unless the aspect is already applied to this class.</para>
+            <para>The aspect is implemented by creating a restore point using the <see cref="M:PostSharp.Patterns.Recording.Recorder.AddRestorePoint(System.String)"/> method
+            in the <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> method, and undo using <see cref="M:PostSharp.Patterns.Recording.Recorder.UndoTo(PostSharp.Patterns.Recording.Operation)"/> when the
+            <see cref="M:System.ComponentModel.IEditableObject.CancelEdit"/> method is invoked. The restore point is removed using
+            <see cref="M:PostSharp.Patterns.Recording.RestorePoint.Remove" /> after invoking <see cref="M:System.ComponentModel.IEditableObject.CancelEdit"/> and <see cref="M:System.ComponentModel.IEditableObject.EndEdit"/></para>
+            <para>The implementation assumes that no other object being tracked by the same <see cref="T:PostSharp.Patterns.Recording.Recorder"/>
+            will be modified between calls to <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> and <see cref="M:System.ComponentModel.IEditableObject.CancelEdit"/>,
+            otherwise changes to these other objects will be canceled as well.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.EditableObjectAttribute.System#ComponentModel#IEditableObject#BeginEdit">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.EditableObjectAttribute.System#ComponentModel#IEditableObject#EndEdit">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.EditableObjectAttribute.System#ComponentModel#IEditableObject#CancelEdit">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.EditableObjectAttribute.PostSharp#Aspects#IAspectProvider#ProvideAspects(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.IRecordable">
+            <summary>
+            Interface implemented by the <see cref="T:PostSharp.Patterns.Recording.RecordableAttribute"/> aspect.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.IRecordable.HasRecorder(System.Boolean)">
+            <summary>
+            Determines whether the current object is attached to a <see cref="T:PostSharp.Patterns.Recording.Recorder"/>, if not,
+            optionally attaches the object to the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+            <param name="autoAttach"><c>true</c> if the current object should be automatically attached to the default <see cref="P:PostSharp.Patterns.Recording.IRecordable.Recorder"/>
+            if it is not yet attached, otherwise <c>false</c>.</param>
+            <returns><c>true</c> if the object is already attached to a <see cref="T:PostSharp.Patterns.Recording.Recorder"/> or if <paramref name="autoAttach"/> is <c>true</c>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.IRecordable.Recorder">
+            <summary>
+            Gets the recorder attached to the current object.
+            </summary>
+            <remarks>
+            <para>Getting this property automatically attaches the object to the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> if it is not yet attached. 
+            Use the <see cref="M:PostSharp.Patterns.Recording.IRecordable.HasRecorder(System.Boolean)"/> method with the <c>false</c> argument to determine whether the object is already attached to a recorder. </para>
+            <note>Named code should not invoke the setting of this property. </note>
+            <para>When this property is set, it is not the responsibility of the class implementing this interface to also set the property to all children. This
+            responsibility belongs to the <see cref="T:PostSharp.Patterns.Recording.Recorder"/> class </para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.IRecordableCallback">
+            <summary>
+            Defines callback methods that are invoked when a recordable object is involved in an undo or redo operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.IRecordableCallback.OnReplaying(PostSharp.Patterns.Recording.ReplayKind,PostSharp.Patterns.Recording.ReplayContext)">
+            <summary>
+            Method invoked before the undo or redo operation has started.
+            </summary>
+            <param name="kind"><see cref="F:PostSharp.Patterns.Recording.ReplayKind.Undo"/> or <see cref="F:PostSharp.Patterns.Recording.ReplayKind.Redo"/>.</param>
+            <param name="context">Reserved for future use.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.IRecordableCallback.OnReplayed(PostSharp.Patterns.Recording.ReplayKind,PostSharp.Patterns.Recording.ReplayContext)">
+            <summary>
+            Method invoked after the undo or redo operation has started.
+            </summary>
+            <param name="kind"><see cref="F:PostSharp.Patterns.Recording.ReplayKind.Undo"/> or <see cref="F:PostSharp.Patterns.Recording.ReplayKind.Redo"/>.</param>
+            <param name="context">Reserved for future use.</param>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.MergeStatus">
+            <summary>
+            Enumeration of possible return values for the <see cref="M:PostSharp.Patterns.Recording.Operation.GetMergeStatus(PostSharp.Patterns.Recording.Operation)"/> method.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.MergeStatus.None">
+            <summary>
+            The subsequent <see cref="T:PostSharp.Patterns.Recording.Operation"/> cannot be merged and is not commutative with the current <see cref="T:PostSharp.Patterns.Recording.Operation"/>.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.MergeStatus.Mergeable">
+            <summary>
+            The subsequent <see cref="T:PostSharp.Patterns.Recording.Operation"/> can be merged into the current <see cref="T:PostSharp.Patterns.Recording.Operation"/> (for instance, two subsequent changes to the same field).
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.MergeStatus.Commutative">
+            <summary>
+            The subsequent <see cref="T:PostSharp.Patterns.Recording.Operation"/> cannot be merged into the current <see cref="T:PostSharp.Patterns.Recording.Operation"/>, but both operations are commutative
+            (for instance, two subsequent changes to different fields).
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.NotRecordedAttribute">
+            <summary>
+            Custom attribute that, when applied to field or property, specifies that it should not be affected by the <see cref="T:PostSharp.Patterns.Recording.RecordableAttribute"/> aspect.
+            Therefore, changes to this field or property will not be recorded into a <see cref="T:PostSharp.Patterns.Recording.Recorder"/>, and will not be affected
+            by undo/redo operations.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operation">
+            <summary>
+            Base class for all operations. An operation is any change of state that can be appended to a <see cref="T:PostSharp.Patterns.Recording.Recorder"/>
+            and be therefore involved in an undo/redo operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operation.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.Operation"/> class.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operation.Name">
+            <summary>
+            Gets the operation name.
+            </summary>
+            <remarks>
+            <para>Operation names are lazily evaluated thanks to the <see cref="P:PostSharp.Patterns.Recording.RecordingServices.OperationFormatter"/>.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operation.OperationDescriptor">
+            <summary>
+            Gets the <see cref="T:PostSharp.Patterns.Recording.Operations.IOperationDescriptor"/>, which is used by the <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/> to produce a human-readable description
+            of the current operation.
+            </summary>
+            <remarks>
+            <para>By default, the <see cref="P:PostSharp.Patterns.Recording.Operation.OperationDescriptor"/> property returns the current <see cref="T:PostSharp.Patterns.Recording.Operation"/>.</para>
+            <para>When the <see cref="T:PostSharp.Patterns.Recording.Operation"/> represents a user-defined scope, the property evaluates to an instance of the <see cref="T:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor"/> class.
+            When it represents a method scope, it evaluates to an instance of the <see cref="T:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor"/> class. </para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operation.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <summary>
+            Undo the current operation.
+            </summary>
+            <param name="context">Reserved for future use.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operation.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <summary>
+            Redo the current operation.
+            </summary>
+            <param name="context">Reserved for future use.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operation.VisitAffectedObjects(System.Action{System.Object})">
+            <summary>
+            Executes a given action on all recordable objects involved with the current <see cref="T:PostSharp.Patterns.Recording.Operation"/>.
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operation.GetMergeStatus(PostSharp.Patterns.Recording.Operation)">
+            <summary>
+            Determines how a given <see cref="T:PostSharp.Patterns.Recording.Operation"/> can be merged with the current <see cref="T:PostSharp.Patterns.Recording.Operation"/>.
+            </summary>
+            <param name="subsequent">The subsequent <see cref="T:PostSharp.Patterns.Recording.Operation"/> to be merged with the current one.</param>
+            <returns>A <see cref="T:PostSharp.Patterns.Recording.MergeStatus"/>.</returns>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operation.Merge(PostSharp.Patterns.Recording.Operation)">
+            <summary>
+            Merges a given <see cref="T:PostSharp.Patterns.Recording.Operation"/> into the current <see cref="T:PostSharp.Patterns.Recording.Operation"/>.
+            </summary>
+            <param name="subsequent">The <see cref="T:PostSharp.Patterns.Recording.Operation"/> to merge into the current one.</param>
+            <remarks>
+            <para>This method is invoked only if the <see cref="M:PostSharp.Patterns.Recording.Operation.GetMergeStatus(PostSharp.Patterns.Recording.Operation)"/> method returned <see cref="T:PostSharp.Patterns.Recording.MergeStatus"/>.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operation.OperationKind">
+            <summary>
+            Gets the kind of operation. 
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.OperationCollection">
+            <summary>
+            Read-only collection of operations (<see cref="T:PostSharp.Patterns.Recording.Operation"/>). The class is exposed on the <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/>
+            and <see cref="P:PostSharp.Patterns.Recording.Recorder.RedoOperations"/> properties.
+            </summary>
+            <remarks>
+            <para>Additionally to traditional collection members, this class exposes the <see cref="M:PostSharp.Patterns.Recording.OperationCollection.Trim(System.Int32)"/> method,
+            which allows to trim the collection of  <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/>
+            or <see cref="P:PostSharp.Patterns.Recording.Recorder.RedoOperations"/>.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.System#Collections#Generic#ICollection{PostSharp#Patterns#Recording#Operation}#Add(PostSharp.Patterns.Recording.Operation)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.System#Collections#Generic#ICollection{PostSharp#Patterns#Recording#Operation}#Clear">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.System#Collections#Generic#ICollection{PostSharp#Patterns#Recording#Operation}#Contains(PostSharp.Patterns.Recording.Operation)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.CopyTo(PostSharp.Patterns.Recording.Operation[],System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.System#Collections#Generic#ICollection{PostSharp#Patterns#Recording#Operation}#Remove(PostSharp.Patterns.Recording.Operation)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.OperationCollection.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.OperationCollection.IsReadOnly">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.Trim(System.Int32)">
+            <summary>
+            Trims the current collection to a given maximal number of operations.
+            </summary>
+            <param name="count">The maximal number of operations to keep in the collection.</param>
+            <remarks>
+            <note>The <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/> collection is automatically trimmed to the value of <see cref="P:PostSharp.Patterns.Recording.Recorder.MaximumOperationsCount"/> property.</note>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationCollection.Trim(PostSharp.Patterns.Recording.RestorePoint)">
+            <summary>
+            Trims the current collection to a specified <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/>.
+            </summary>
+            <param name="restorePoint">A token to the <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/> to which the current collection should be trimmed.</param>
+        </member>
+        <member name="E:PostSharp.Patterns.Recording.OperationCollection.CollectionChanged">
+            <inheritdoc />
+        </member>
+        <member name="E:PostSharp.Patterns.Recording.OperationCollection.PropertyChanged">
+            <summary>
+            Event raised when the value of a property of the current object changes.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.OperationFormatter">
+            <summary>
+            Base class for all operation formatters, which provide a human-readable description of operations (<see cref="T:PostSharp.Patterns.Recording.Operation"/>).
+            </summary>
+            <remarks>
+            <para>Instances of the <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/> class form a chain of responsibility. If one instance does not know how
+            to format an <see cref="T:PostSharp.Patterns.Recording.Operation"/>, it calls the next instance in the chain.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationFormatter.#ctor(PostSharp.Patterns.Recording.OperationFormatter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/> class.
+            </summary>
+            <param name="next">The next instance in the chain of responsibility.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationFormatter.FormatOperation(PostSharp.Patterns.Recording.Operation)">
+            <summary>
+            Gets a human-readable description of an <see cref="T:PostSharp.Patterns.Recording.Operation"/>.
+            </summary>
+            <param name="operation">The <see cref="T:PostSharp.Patterns.Recording.Operation"/>.</param>
+            <returns>A human-readable description of the <see cref="T:PostSharp.Patterns.Recording.Operation"/>.</returns>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.OperationFormatter.FormatOperationDescriptor(PostSharp.Patterns.Recording.Operations.IOperationDescriptor)">
+            <summary>
+            Gets a human-readable description of an <see cref="T:PostSharp.Patterns.Recording.Operation"/> given its <see cref="T:PostSharp.Patterns.Recording.Operations.IOperationDescriptor"/>.
+            </summary>
+            <param name="operation">The operation descriptor.</param>
+            <returns>A human-readable description for <paramref name="operation"/>, or <c>null</c> if the current <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/> does not know
+            how to format <paramref name="operation"/>, in which case the next <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/> in the chain of responsibility will be invoked.</returns>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.OperationKind">
+            <summary>
+            Enumeration of different kinds of <see cref="T:PostSharp.Patterns.Recording.Operation"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.AttachRecorderToObject">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.ClearCollection">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.ClearCollectionOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.Composite">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.CompositeOperation"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.DetachRecorderFromObject">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.Field">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.FieldOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.InsertCollectionItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.RemoveCollectionItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.SetCollectionItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.MoveCollectionItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.InsertCollectionRange">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.RemoveCollectionRange">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.RestorePoint">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.Method">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.Named">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.InsertDictionaryItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.RemoveDictionaryItem">
+            <summary>
+            <seealso cref="T:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.SetDictionaryItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.ClearDictionary">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.ClearDictionaryOperation`2"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.InsertSetItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.AddSetItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.RemoveSetItem">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.RemoveSetItemOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.ClearSet">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.ClearSetOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.ChangeManySetItems">
+            <summary>
+            <see cref="T:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1"/>
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.OperationKind.Other">
+            <summary>
+            User-defined operation. Any value higher than <see cref="F:PostSharp.Patterns.Recording.OperationKind.Other"/> is acceptable.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.Add(`0)"/> or <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.Insert(System.Int32,`0)"/> operation.
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1.NewIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1.NewItem">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddCollectionItemOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0})"/> or <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})"/> operation.
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1.NewIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1.NewItems">
+            <summary>
+            Gets the items that were added to the set after the operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddCollectionRangeOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableDictionary`2.Add(`0,`1)"/> operation.
+            </summary>
+            <typeparam name="TKey">Type of dictionary keys.</typeparam>
+            <typeparam name="TValue">Type of dictionary values.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2.NewValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddDictionaryItemOperation`2.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.AddSetItemOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableHashSet`1.Add(`0)"/> operation.
+            </summary>
+            <typeparam name="T">Type of set items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddSetItemOperation`1.NewItem">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddSetItemOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AddSetItemOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AddSetItemOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation">
+            <summary>
+            Encapsulates the <see cref="M:PostSharp.Patterns.Recording.Recorder.Attach(System.Object)"/> operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation.Object">
+            <summary>
+            Gets the object being attached to the <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1">
+            <summary>
+            Represents any of the set operations that add or remove multiple items
+            (e.g. <see cref="M:PostSharp.Patterns.Collections.AdvisableHashSet`1.IntersectWith(System.Collections.Generic.IEnumerable{`0})"/>, <see cref="M:PostSharp.Patterns.Collections.AdvisableHashSet`1.UnionWith(System.Collections.Generic.IEnumerable{`0})"/>, ...).
+            </summary>
+            <typeparam name="T">Type of items in the set.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1.NewItems">
+            <summary>
+            Gets the items that were added to the set after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1.OldItems">
+            <summary>
+            Gets the items that were in the set before the operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ChangeManySetOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.ClearCollectionOperation`1">
+            <summary>
+            Represents the <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.Clear"/> operation.
+            </summary>
+            <typeparam name="T">Type of items in the collection.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ClearCollectionOperation`1.OldItems">
+            <summary>
+            Gets the items that were in the collection before it was cleared.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ClearCollectionOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ClearCollectionOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ClearCollectionOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.ClearDictionaryOperation`2">
+            <summary>
+            Represents the <see cref="T:PostSharp.Patterns.Collections.AdvisableDictionary`2"/> operation.
+            </summary>
+            <typeparam name="TKey">Type of keys.</typeparam>
+            <typeparam name="TValue">Type of values.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ClearDictionaryOperation`2.OldEntries">
+            <summary>
+            Gets the items that were in the dictionary before it was cleared.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ClearDictionaryOperation`2.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ClearDictionaryOperation`2.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ClearDictionaryOperation`2.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.ClearSetOperation`1">
+            <summary>
+            Represents the <see cref="M:PostSharp.Patterns.Collections.AdvisableHashSet`1.Clear"/> operation.
+            </summary>
+            <typeparam name="T">Type of items in the set.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ClearSetOperation`1.OldItems">
+            <summary>
+            Gets the items that were in the set before it was cleared.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ClearSetOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.ClearSetOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ClearSetOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.CollectionOperation`1">
+            <summary>
+            Base class for operations on an <see cref="T:PostSharp.Patterns.Collections.AdvisableCollection`1"/>.
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.Collection">
+            <summary>
+            Gets the collection on which the operation was performed.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.NewIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.OldIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.NewItem">
+            <summary>
+            Gets the item before the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.OldItem">
+            <summary>
+            Gets the item after the operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.PostSharp#Patterns#Recording#Operations#ICollectionOperation#Collection">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.PostSharp#Patterns#Recording#Operations#ICollectionOperation#NewItem">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CollectionOperation`1.PostSharp#Patterns#Recording#Operations#ICollectionOperation#OldItem">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.CompositeOperation">
+            <summary>
+            Represents an <see cref="T:PostSharp.Patterns.Recording.Operation"/> composed of other sub-operations.
+            </summary>
+            <remarks>
+            <para>The <see cref="P:PostSharp.Patterns.Recording.Operations.CompositeOperation.OperationDescriptor"/> is typically not identical to the <see cref="T:PostSharp.Patterns.Recording.Operations.CompositeOperation"/> itself.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CompositeOperation.OperationDescriptor">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.CompositeOperation.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.CompositeOperation.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.CompositeOperation.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.CompositeOperation.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation">
+            <summary>
+            Encapsulates the <see cref="M:PostSharp.Patterns.Recording.Recorder.Detach(System.Object)"/> operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation.Object">
+            <summary>
+            Gets the object being attached to the <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2">
+            <summary>
+            Base class for operations on an <see cref="T:PostSharp.Patterns.Collections.AdvisableDictionary`2"/>.
+            </summary>
+            <typeparam name="TKey">Type of keys.</typeparam>
+            <typeparam name="TValue">Type of values.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.Dictionary">
+            <summary>
+            Gets the collection on which the operation was performed.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.Key">
+            <summary>
+            Gets the key of the dictionary entry affected by the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.NewValue">
+            <summary>
+            Gets the value of the dictionary entry after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.OldValue">
+            <summary>
+            Gets the value of the dictionary entry before the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.PostSharp#Patterns#Recording#Operations#IDictionaryOperation#Key">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.PostSharp#Patterns#Recording#Operations#IDictionaryOperation#NewValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.PostSharp#Patterns#Recording#Operations#IDictionaryOperation#OldValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.PostSharp#Patterns#Recording#Operations#IDictionaryOperation#Dictionary">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.FieldOperation`1">
+            <summary>
+            Encapsulates a modification of a field value.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.FieldOperation`1.Target">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.FieldOperation`1.PostSharp#Patterns#Recording#Operations#IFieldOperation#OldValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.FieldOperation`1.PostSharp#Patterns#Recording#Operations#IFieldOperation#NewValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.FieldOperation`1.Location">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.FieldOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.FieldOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.FieldOperation`1.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.FieldOperation`1.GetMergeStatus(PostSharp.Patterns.Recording.Operation)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.FieldOperation`1.Merge(PostSharp.Patterns.Recording.Operation)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.FieldOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.ICollectionOperation">
+            <summary>
+            Weakly-typed interface for the <see cref="T:PostSharp.Patterns.Recording.Operations.CollectionOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ICollectionOperation.Collection">
+            <summary>
+            Gets the collection on which the operation was performed.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ICollectionOperation.NewIndex">
+            <summary>
+            Gets the index after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ICollectionOperation.OldIndex">
+            <summary>
+            Gets the index before the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ICollectionOperation.NewItem">
+            <summary>
+            Gets the item after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.ICollectionOperation.OldItem">
+            <summary>
+            Gets the item before the operation.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.IDictionaryOperation">
+            <summary>
+            Weakly-typed interface for the <see cref="T:PostSharp.Patterns.Recording.Operations.DictionaryOperation`2"/> class.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IDictionaryOperation.Dictionary">
+            <summary>
+            Gets the collection on which the operation was performed.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IDictionaryOperation.Key">
+            <summary>
+            Gets the key of the dictionary entry affected by the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IDictionaryOperation.NewValue">
+            <summary>
+            Gets the value of the dictionary entry after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IDictionaryOperation.OldValue">
+            <summary>
+            Gets the value of the dictionary entry before the operation.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.IFieldOperation">
+            <summary>
+            Weakly-typed interface for <see cref="T:PostSharp.Patterns.Recording.Operations.FieldOperation`1"/>.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IFieldOperation.Target">
+            <summary>
+            Gets the <c>this</c> instance.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IFieldOperation.OldValue">
+            <summary>
+            Gets the value of the field before the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IFieldOperation.NewValue">
+            <summary>
+            Gets the value of the field after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IFieldOperation.Location">
+            <summary>
+            Gets the <see cref="T:PostSharp.Reflection.LocationInfo"/> of the modified field.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.IOperationDescriptor">
+            <summary>
+            Encapsulates information that allow implementations of the <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/> class to provide
+            a human-readable description of an <see cref="T:PostSharp.Patterns.Recording.Operation"/>.
+            </summary>
+            <remarks>
+            <para>If you implement your own <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/>, you can also implement your own <see cref="T:PostSharp.Patterns.Recording.Operations.IOperationDescriptor"/>
+            and assign it to the <see cref="P:PostSharp.Patterns.Recording.RecordingScope.OperationDescriptor"/> property of the <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/>
+            returned by <see cref="M:PostSharp.Patterns.Recording.Recorder.OpenScope(PostSharp.Patterns.Recording.RecordingScopeOption)"/>.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IOperationDescriptor.OperationKind">
+            <summary>
+            Gets the kind of operation.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.IHashSetOperation">
+            <summary>
+            Weakly-typed interface for the <see cref="T:PostSharp.Patterns.Recording.Operations.HashSetOperation`1"/> class.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IHashSetOperation.HashSet">
+            <summary>
+            Gets the collection on which the operation was performed.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IHashSetOperation.NewItem">
+            <summary>
+            Gets the item after the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.IHashSetOperation.OldItem">
+            <summary>
+            Gets the item before the operation.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor">
+            <summary>
+            Represents a call to a method in user code.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor.Arguments">
+            <summary>
+            Gets the method arguments.
+            </summary>
+            <remarks>
+            <para>This property is <c>null</c> unless the <see cref="P:PostSharp.Patterns.Recording.RecordableAttribute.ProvideMethodContext"/> property is set to <c>true</c> for the target class.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor.Target">
+            <summary>
+            Gets the <c>this</c> instance.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor.Method">
+            <summary>
+            Gets the executed method.
+            </summary>
+            <remarks>
+            <para>This property is <c>null</c> unless the <see cref="P:PostSharp.Patterns.Recording.RecordableAttribute.ProvideMethodContext"/> property is set to <c>true</c> for the target class.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor.MethodName">
+            <summary>
+            Gets the name of the method. This property is set even if the <see cref="P:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor.Method"/> property is <c>null</c>.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.Move(System.Int32,System.Int32)"/> operation.
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1.OldIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1.NewIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1.OldItem">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.MoveCollectionItemOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor">
+            <summary>
+            Represents an operation whose named has been set declaratively or imperatively.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor"/>.
+            </summary>
+            <param name="name">The operation name.</param>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor.Name">
+            <summary>
+            Gets the operation name.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.RecorderOperation">
+            <summary>
+            An <see cref="T:PostSharp.Patterns.Recording.Operation"/> on a <see cref="P:PostSharp.Patterns.Recording.Operations.RecorderOperation.Recorder"/>, specifically a base class for
+            <see cref="T:PostSharp.Patterns.Recording.Operations.AttachObjectToRecorderOperation"/> and <see cref="T:PostSharp.Patterns.Recording.Operations.DetachObjectFromRecorderOperation"/>.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RecorderOperation.Recorder">
+            <summary>
+            Gets the <see cref="P:PostSharp.Patterns.Recording.Operations.RecorderOperation.Recorder"/> to which the current <see cref="T:PostSharp.Patterns.Recording.Operation"/> relates.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RecorderOperation.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.Remove(`0)"/> operation.
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1.OldIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1.OldItem">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveCollectionItemOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.RemoveCollectionRangeOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableCollection`1.RemoveRange(System.Int32,System.Int32)"/> operation.
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveCollectionRangeOperation`1.OldIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveCollectionRangeOperation`1.OldItems">
+            <summary>
+            Gets the items that were in the collection before the operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveCollectionRangeOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveCollectionRangeOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveCollectionRangeOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableDictionary`2.Remove(`0)"/> operation.
+            </summary>
+            <typeparam name="TKey">Type of dictionary keys.</typeparam>
+            <typeparam name="TValue">Type of dictionary values.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2.OldValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveDictionaryItemOperation`2.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.RemoveSetItemOperation`1">
+            <summary>
+            Represents a <see cref="M:PostSharp.Patterns.Collections.AdvisableHashSet`1.Remove(`0)"/> operation.
+            </summary>
+            <typeparam name="T">Type of set items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveSetItemOperation`1.OldItem">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveSetItemOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.RemoveSetItemOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.RemoveSetItemOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1">
+            <summary>
+            Represents the operation of setting an item in an <see cref="T:PostSharp.Patterns.Collections.AdvisableCollection`1"/> .
+            </summary>
+            <typeparam name="T">Type of collection items.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.OldIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.NewIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.NewItem">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.OldItem">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetCollectionItemOperation`1.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2">
+            <summary>
+            Represents the operation of setting a value in an <see cref="T:PostSharp.Patterns.Collections.AdvisableDictionary`2"/>.
+            </summary>
+            <typeparam name="TKey">Type of dictionary keys.</typeparam>
+            <typeparam name="TValue">Type of dictionary values.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2.NewValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2.OldValue">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.SetDictionaryItemOperation`2.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Operations.HashSetOperation`1">
+            <summary>
+            Base class for operations on an <see cref="T:PostSharp.Patterns.Collections.AdvisableHashSet`1"/>.
+            </summary>
+            <typeparam name="T">Type of items in set.</typeparam>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.Set">
+            <summary>
+            Gets the set on which the operation was performed.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.NewItem">
+            <summary>
+            Gets the item before the operation.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.OldItem">
+            <summary>
+            Gets the item after the operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.PostSharp#Patterns#Recording#Operations#IHashSetOperation#HashSet">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.PostSharp#Patterns#Recording#Operations#IHashSetOperation#NewItem">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Operations.HashSetOperation`1.PostSharp#Patterns#Recording#Operations#IHashSetOperation#OldItem">
+            <inheritdoc />
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecordableAttribute">
+            <summary>
+            Custom attribute that, when applied to a class, instruments fields and methods of this class so
+            that it can be involved in undo/redo operations.
+            </summary>
+            <seealso cref="T:PostSharp.Patterns.Recording.Recorder"/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <seealso cref="T:PostSharp.Patterns.Recording.RecordableAttribute"/> class.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordableAttribute.AutoRecord">
+            <summary>
+            Determines whether changes in this object must be recorded as soon as the object constructor has completed.
+            </summary>
+            <remarks>
+            <para>If this property is set to <c>true</c>, a <see cref="T:PostSharp.Patterns.Recording.Recorder"/> will be automatically assigned to
+            the target instance using the <see cref="P:PostSharp.Patterns.Recording.RecordingServices.OperationFormatter"/>. Set this property to <c>false</c>
+            if you need to assign the <see cref="T:PostSharp.Patterns.Recording.Recorder"/> manually.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordableAttribute.ProvideMethodContext">
+            <summary>
+            Determines whether full method invocation context is provided to the <see cref="T:PostSharp.Patterns.Recording.Operations.MethodExecutionOperationDescriptor"/> class
+            for use in a custom <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/>. This property is set to <c>false</c> by default for performance reasons.
+            </summary>
+            <remarks>
+            <para>This property applies to all public methods of the target class.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.RuntimeInitializeInstance(PostSharp.Aspects.Advices.AspectInitializationReason)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.CompileTimeValidate(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.CompileTimeInitialize(System.Type,PostSharp.Aspects.AspectInfo)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.OnInstanceConstructed">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.OnChildAttached(System.Object,PostSharp.Patterns.Model.ChildInfo)">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordableAttribute.OnChildAttachedMethod">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordableAttribute.OnParentChangedBaseMethod">
+            <exclude/>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecordableAttribute.SetRecordableFieldAspect">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.SetRecordableFieldAspect.OnFieldSet``1(PostSharp.Aspects.ILocationBinding{``0},System.Object,``0)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.PostSharp#Patterns#Recording#IRecordable#HasRecorder(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordableAttribute.PostSharp#Patterns#Recording#IRecordable#Recorder">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.OnMethodEntry(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.OnMethodEntryNoContext(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.OnMethodExit(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.OnMethodExitNoContext(PostSharp.Aspects.MethodExecutionArgs)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.PostSharp#Aspects#IAspectProvider#ProvideAspects(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordableAttribute.BaseQueryInterface">
+            <exclude/>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordableAttribute.QueryInterfaceMethod">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.QueryInterface(System.Type)">
+            <exclude/>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordableAttribute.QueryInterface``1">
+            <exclude/>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.Recorder">
+            <summary>
+            Records changed done on an object model and allow to undo and redo them.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.Recorder"/> class.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.Recorder"/> class and attaches it to a given object.
+            </summary>
+            <param name="owner">The object to which the new <see cref="T:PostSharp.Patterns.Recording.Recorder"/> should be attached.</param>
+            <remarks>
+            <para>The <see cref="T:PostSharp.Patterns.Recording.Recorder"/> created using this constructor will be private to its <paramref name="owner"/>, that is, no other object
+            than <paramref name="owner"/> and descendants of <paramref name="owner"/> will be allowed to be attached to this <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Recorder.CanUndo">
+            <summary>
+            Determines if the <see cref="M:PostSharp.Patterns.Recording.Recorder.Undo"/> method can be invoked.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Recorder.CanRedo">
+            <summary>
+            Determines if the <see cref="M:PostSharp.Patterns.Recording.Recorder.Redo"/> method can be invoked.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Recorder.CanAddRestorePoint">
+            <summary>
+            Determines if the <see cref="M:PostSharp.Patterns.Recording.Recorder.AddRestorePoint(System.String)"/> method can be invoked.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Recorder.MaximumOperationsCount">
+            <summary>
+            Gets the maximum number of operations in the <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/> and <see cref="P:PostSharp.Patterns.Recording.Recorder.RedoOperations"/> collections. 
+            These collections are automatically trimmed so that their size never exceeds <see cref="P:PostSharp.Patterns.Recording.Recorder.MaximumOperationsCount"/>.
+            </summary>
+            <value>The default value is <c>int.MaxValue</c>.</value>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Recorder.UndoOperations">
+            <summary>
+            Gets the collection of operations that can be undone using the <see cref="M:PostSharp.Patterns.Recording.Recorder.Undo"/> method.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.Recorder.RedoOperations">
+            <summary>
+            Gets the collection of operations that can be redone using the <see cref="M:PostSharp.Patterns.Recording.Recorder.Redo"/> method.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.AddOperation(PostSharp.Patterns.Recording.Operation)">
+            <summary>
+            Adds a new <see cref="T:PostSharp.Patterns.Recording.Operation"/> to <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/> collection of the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+            <param name="operation">The operation.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.AddRestorePoint(System.String)">
+            <summary>
+            Adds new restore point with given name.
+            </summary>
+            <param name="name">The name of the restore point, or <c>null</c> to create an unnamed restore point.</param>
+            <returns>The newly created <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/>.</returns>
+            <remarks>
+            <para>A <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/> can be used as an argument to the <see cref="M:PostSharp.Patterns.Recording.Recorder.UndoTo(PostSharp.Patterns.Recording.Operation)"/> or <see cref="M:PostSharp.Patterns.Recording.Recorder.RedoTo(PostSharp.Patterns.Recording.Operation)"/> method.</para>
+            <para>To remove a <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/> from <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/> or <see cref="P:PostSharp.Patterns.Recording.Recorder.RedoOperations"/>, call the <see cref="M:PostSharp.Patterns.Recording.RestorePoint.Remove"/> method.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.Undo">
+            <summary>
+            Undo last operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.UndoTo(PostSharp.Patterns.Recording.Operation)">
+            <summary>
+            Undo all operations to specific <see cref="T:PostSharp.Patterns.Recording.Operation"/> or <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/>.
+            </summary>
+            <param name="operation">the operation.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.Redo">
+            <summary>
+            Redo last operation.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.RedoTo(PostSharp.Patterns.Recording.Operation)">
+            <summary>
+            redo all operation to specific operation.
+            </summary>
+            <param name="operation">the operation.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.Clear">
+            <summary>
+            Clears undo and redo lists.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.OpenScope(PostSharp.Patterns.Recording.RecordingScopeOption)">
+            <summary>
+            Opens an unnamed <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/>.
+            </summary>
+            <param name="option">Scope options. Specify this parameter if you want the scope to be <see cref="F:PostSharp.Patterns.Recording.RecordingScopeOption.Atomic"/>.</param>
+            <returns>A <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> object, which should be closed using <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/>
+            or <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/>.</returns>
+            <remarks>
+            <para>The name of the scope can be set at any time by setting the <see cref="P:PostSharp.Patterns.Recording.RecordingScope.OperationDescriptor"/> property.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.OpenScope(System.String,PostSharp.Patterns.Recording.RecordingScopeOption)">
+            <summary>
+            Opens a <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> with a given name.
+            </summary>
+            <param name="name">The scope name, or <c>null</c> to create an unnamed scope.</param>
+            <param name="option">Scope options. Specify this parameter if you want the scope to be <see cref="F:PostSharp.Patterns.Recording.RecordingScopeOption.Atomic"/>.</param>
+            <returns>A <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> object, which should be closed using <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/>
+            or <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/>.</returns>
+            <remarks>
+            <para>The name of the scope can be set at any time by setting the <see cref="P:PostSharp.Patterns.Recording.RecordingScope.OperationDescriptor"/> property.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.Attach(System.Object)">
+            <summary>
+            Attaches a recordable object (including its descendant objects) to the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/> so that changes in
+            this objects start being recorded into the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+            <param name="obj">The recordable object whose changes need to be recorded into the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</param>
+            <remarks>
+            <para>This method implicitly attaches all descendants of <paramref name="obj"/> to the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.Attach(System.Object,System.Boolean)">
+            <summary>
+            Attaches a recordable object to the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/> so that changes in
+            this objects start being recorded into the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>, and specifies whether descendants should be also added.
+            </summary>
+            <param name="obj">The recordable object whose changes need to be recorded into the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</param>
+            <param name="attachChildren"></param>
+            <remarks>
+            <para>This method implicitly attaches all descendants of <paramref name="obj"/> to the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.Recorder.Detach(System.Object)">
+            <summary>
+            Detaches a recordable object from the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>, so that changes in
+            this objects stop being recorded into the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+            <param name="obj">The recordable object whose changes no longer need to be recorded into the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</param>
+            <remarks>
+            <para>This method implicitly detaches all descendants of <paramref name="obj"/> from the current <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.</para>
+            </remarks>
+        </member>
+        <member name="E:PostSharp.Patterns.Recording.Recorder.PropertyChanged">
+            <summary>
+            Event raised when the value of a property of the current object changes.
+            </summary>
+        </member>
+        <member name="E:PostSharp.Patterns.Recording.Recorder.ChildPropertyChanging">
+            <summary>
+            Event raised before the property of a child object is changed.
+            </summary>
+        </member>
+        <member name="E:PostSharp.Patterns.Recording.Recorder.ChildPropertyChanged">
+            <summary>
+            Event raised after the property of a child object has been changed.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecorderProvider">
+            <summary>
+            Abstract class that represents a node in the chain of responsibility, starting at the <see cref="P:PostSharp.Patterns.Recording.RecordingServices.RecorderProvider"/> property,
+            whose role is to provide a default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> to recordable objects.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecorderProvider.#ctor(PostSharp.Patterns.Recording.RecorderProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.RecorderProvider"/> class.
+            </summary>
+            <param name="next">Next instance in the chain of responsibility.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecorderProvider.GetRecorder(System.Object)">
+            <summary>
+            Gets the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for a given object. This method goes through the whole chain of responsibility.
+            </summary>
+            <param name="obj">The object for which the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> is required, or <c>null</c>
+            if the global default provider (exposed for convenience on the <see cref="P:PostSharp.Patterns.Recording.RecordingServices.DefaultRecorder"/>) property
+            if required.
+            </param>
+            <returns>The <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for <paramref name="obj"/>, or <c>null</c> if no <see cref="T:PostSharp.Patterns.Recording.RecorderProvider"/> in the chain of responsibility
+            knows how to provide a <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for <paramref name="obj"/>.</returns>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecorderProvider.GetRecorderCore(System.Object)">
+            <summary>
+            Gets the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for a given object.
+            </summary>
+            <param name="obj">The object for which the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> is required, or <c>null</c>
+            if the global default provider (exposed for convenience on the <see cref="P:PostSharp.Patterns.Recording.RecordingServices.DefaultRecorder"/>) property
+            if required.
+            </param>
+            <returns>The <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for <paramref name="obj"/>, or <c>null</c> if the current <see cref="T:PostSharp.Patterns.Recording.RecorderProvider"/> does not know
+            how to provide a <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for <paramref name="obj"/>, in which case the caller shall invoke the next <see cref="T:PostSharp.Patterns.Recording.RecorderProvider"/>
+            in the chain of responsibility.</returns>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecordingScope">
+            <summary>
+            Defines the scope a logical operation, that is, a set of change that should be undone or redone as a whole.
+            </summary>
+            <remarks>
+            <para>Scopes can be defined declaratively using the <see cref="T:PostSharp.Patterns.Recording.RecordingScopeAttribute"/> custom attribute.</para>
+            <para>To open a scope imperatively, use the <see cref="M:PostSharp.Patterns.Recording.Recorder.OpenScope(PostSharp.Patterns.Recording.RecordingScopeOption)"/> method.
+            Use the <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/> or <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/> method to close the scope.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordingScope.OperationDescriptor">
+            <summary>
+            Gets or sets the <see cref="T:PostSharp.Patterns.Recording.Operations.IOperationDescriptor"/> for the current scope.
+            </summary>
+            <remarks>
+            <para>To set the name of the current scope, assign this property to an instance of the <see cref="T:PostSharp.Patterns.Recording.Operations.NamedOperationDescriptor"/> class.</para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordingScope.Dispose">
+            <summary>
+            Closes the current <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/>.
+            </summary>
+            <remarks>
+            <para>If the current <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> is atomic, invoking <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/> without <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/>
+            will undo all changes done in the current scope. In other words, <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/> without <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/> has rollback semantics.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordingScope.Complete">
+            <summary>
+            Closes the current <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> and mark it as successful.
+            </summary>
+            <remarks>
+            <para>It allowed but unnecessary to call the <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/> method after the <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/> method.</para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecordingScopeAttribute">
+            <summary>
+            Custom attribute that, when applied to a method, defines the characteristics of the <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> that corresponds
+            to the target method.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordingScopeAttribute.Name">
+            <summary>
+            Gets the scope name.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordingScopeAttribute.Option">
+            <summary>
+            Gets the scope option.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordingScopeAttribute.#ctor(System.String,PostSharp.Patterns.Recording.RecordingScopeOption)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.RecordingScopeAttribute"/> class and specify the scope name.
+            </summary>
+            <param name="name">The scope name, or <c>null</c>.</param>
+            <param name="option">Scope options.</param>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RecordingScopeAttribute.#ctor(PostSharp.Patterns.Recording.RecordingScopeOption)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PostSharp.Patterns.Recording.RecordingScopeAttribute"/>.
+            </summary>
+            <param name="option">Scope options. Typically <see cref="F:PostSharp.Patterns.Recording.RecordingScopeOption.Atomic"/> or <see cref="F:PostSharp.Patterns.Recording.RecordingScopeOption.Skip"/>.</param>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecordingScopeOption">
+            <summary>
+            Enumerates the kinds of recording scope.
+            </summary>
+            <seealso cref="T:PostSharp.Patterns.Recording.RecordingScope"/>
+            <seealso cref="T:PostSharp.Patterns.Recording.RecordingScopeAttribute"/>
+            <seealso cref="M:PostSharp.Patterns.Recording.Recorder.OpenScope(PostSharp.Patterns.Recording.RecordingScopeOption)"/>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordingScopeOption.Default">
+            <summary>
+            For declarative scopes, a <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> is automatically opened for the first public method of a recordable object on the call stack.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordingScopeOption.Skip">
+            <summary>
+            Prevents a <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> to be automatically opened for the target method. Cannot be used with <see cref="M:PostSharp.Patterns.Recording.Recorder.OpenScope(PostSharp.Patterns.Recording.RecordingScopeOption)"/>.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.RecordingScopeOption.Atomic">
+            <summary>
+            Causes changes in the <see cref="T:PostSharp.Patterns.Recording.RecordingScope"/> to be rolled back if the scope execution is not successful. In case of declarative scope (<see cref="T:PostSharp.Patterns.Recording.RecordingScopeAttribute"/>), 
+            it means that changes done by the method will be rolled back if the method results in an exception. For imperative scopes (<see cref="M:PostSharp.Patterns.Recording.Recorder.OpenScope(PostSharp.Patterns.Recording.RecordingScopeOption)"/>,
+            the changes will be rolled back if the scope is disposed by the <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Dispose"/> method without previous call to the <see cref="M:PostSharp.Patterns.Recording.RecordingScope.Complete"/> method.
+            Unlike normal scopes, atomic scopes are nested. However, only the top scope can be seen in the <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/> and <see cref="P:PostSharp.Patterns.Recording.Recorder.RedoOperations"/> collections.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RecordingServices">
+            <summary>
+            Provides global methods to work with the <c>PostSharp.Patterns.Recording</c> namespace.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordingServices.DefaultRecorder">
+            <summary>
+            Gets the global default <see cref="T:PostSharp.Patterns.Recording.Recorder"/>.
+            </summary>
+            <remarks>
+            <para>This property is provided for convenience only. It is equivalent to calling <see cref="M:PostSharp.Patterns.Recording.RecorderProvider.GetRecorder(System.Object)"/>
+            with a <c>null</c> argument.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordingServices.OperationFormatter">
+            <summary>
+            Gets or sets the <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/>, which provides human-readable descriptions of operations.
+            </summary>
+            <remarks>
+            <para>This property is the head of a chain of responsibility. If you set this property to a new value, you typically have to
+            pass the previous value of this property to the constructor of your custom  <see cref="T:PostSharp.Patterns.Recording.OperationFormatter"/>.</para>
+            </remarks>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RecordingServices.RecorderProvider">
+            <summary>
+            Gets or sets the <see cref="T:PostSharp.Patterns.Recording.RecorderProvider"/>, which provides the default <see cref="T:PostSharp.Patterns.Recording.Recorder"/> for recordable objects
+            that have the <see cref="P:PostSharp.Patterns.Recording.RecordableAttribute.AutoRecord"/> property set to <c>true</c> (which is the default value).
+            </summary>
+            <remarks>
+            <para>This property is the head of a chain of responsibility. If you set this property to a new value, you typically have to
+            pass the previous value of this property to the constructor of your custom  <see cref="T:PostSharp.Patterns.Recording.RecorderProvider"/>.</para>
+            <para>The default implementation unconditionally returns a single global instance of the <see cref="T:PostSharp.Patterns.Recording.Recorder"/> class.</para>
+            </remarks>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.ReplayContext">
+            <summary>
+            Represents the context of an undo or redo operation. The class gives access to system-defined and user-defined pieces of information.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.ReplayContext.Success">
+            <summary>
+            Determines whether the operation was successful. This flag is set only in the <see cref="M:PostSharp.Patterns.Recording.IRecordableCallback.OnReplayed(PostSharp.Patterns.Recording.ReplayKind,PostSharp.Patterns.Recording.ReplayContext)"/> method.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.ReplayContext.CustomContext">
+            <summary>
+            Gets a dictionary that user code can use to store arbitrary pieces of information.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.ReplayKind">
+            <summary>
+            Enumerates the kind of situations in which the <see cref="M:PostSharp.Patterns.Recording.IRecordableCallback.OnReplaying(PostSharp.Patterns.Recording.ReplayKind,PostSharp.Patterns.Recording.ReplayContext)"/> or <see cref="M:PostSharp.Patterns.Recording.IRecordableCallback.OnReplayed(PostSharp.Patterns.Recording.ReplayKind,PostSharp.Patterns.Recording.ReplayContext)"/>
+            methods are invoked.
+            </summary>
+            <remarks>
+            <para>Other reasons may be added in the future.</para>
+            </remarks>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.ReplayKind.Undo">
+            <summary>
+            Undo operation.
+            </summary>
+        </member>
+        <member name="F:PostSharp.Patterns.Recording.ReplayKind.Redo">
+            <summary>
+            Redo operation.
+            </summary>
+        </member>
+        <member name="T:PostSharp.Patterns.Recording.RestorePoint">
+            <summary>
+            Represents a point to which operations can be undone or redone. A <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/> is a pseudo-<see cref="T:PostSharp.Patterns.Recording.Operation"/>
+            that does not represent any change.
+            </summary>
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RestorePoint.RestorePointName">
+            <summary>
+            Gets the name of the current <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/>.
+            </summary>
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RestorePoint.Undo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RestorePoint.Redo(PostSharp.Patterns.Recording.ReplayContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RestorePoint.VisitAffectedObjects(System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="P:PostSharp.Patterns.Recording.RestorePoint.OperationKind">
+            <inheritdoc />
+        </member>
+        <member name="M:PostSharp.Patterns.Recording.RestorePoint.Remove">
+            <summary>
+            Removes the current <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/> from the <see cref="P:PostSharp.Patterns.Recording.Recorder.UndoOperations"/> or <see cref="P:PostSharp.Patterns.Recording.Recorder.RedoOperations"/>.
+            </summary>
+            <returns><c>true</c> if the <see cref="T:PostSharp.Patterns.Recording.RestorePoint"/> was removed, <c>false</c> if it was not present in these collections.</returns>
+        </member>
+    </members>
+</doc>

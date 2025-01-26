@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net472</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<RootNamespace>UnitTestProject1</RootNamespace>
+		<AssemblyName>UnitTestProject1</AssemblyName>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<LangVersion>10</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="MSTest.TestAdapter" Version="3.6.4" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.6.4" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\RegexGraph\RegexNodeGraph.csproj" />
+	</ItemGroup>
+</Project>

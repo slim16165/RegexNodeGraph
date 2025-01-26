@@ -1,0 +1,121 @@
+# Build Results
+bin/
+obj/
+out/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+.vscode/*
+
+# Local History for Visual Studio
+.vs/
+
+# Rider
+.idea/
+*.sln.iml
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# User-specific configuration files
+*.userprefs
+
+# JetBrains Rider
+.idea/
+.idea/**
+
+# Logs
+*.log
+*.tlog
+
+# Temporary folders
+*.tmp
+*.temp
+
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of the presence of "restore" command
+**/packages/*
+# Uncomment if necessary, keep in mind that NuGet restore is an option
+# !**/packages/build/
+# !**/packages/repositories.config
+
+# Visual Studio patch installer
+*.vsix
+
+# Browser config
+.browsers/
+
+# Local history files
+.history/
+
+# DotNet Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Core
+launchSettings.json
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Entity Framework Core migrations
+migrations/
+
+# StyleCop configuration files
+StyleCop.Cache
+
+# IIS Express
+/.vs/config/applicationhost.config
+/.vs/**/applicationhost.config
+
+# Coverage Analysis
+*.coverage
+*.coveragexml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Windows-specific stuff
+*.winmd
+
+# Others
+.ionide/
+.fusebox/
+
+# IDE settings
+.idea/
+*.swp
+*.bak
+*.pidb
+*.sublime-workspace
+*.sublime-project
+*.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+*.sln.iml

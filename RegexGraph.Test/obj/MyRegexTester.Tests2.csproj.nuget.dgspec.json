@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\MyRegexTester.Tests2.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\MyRegexTester.Tests2.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\MyRegexTester.Tests2.csproj",
+        "projectName": "UnitTestProject1",
+        "projectPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\MyRegexTester.Tests2.csproj",
+        "packagesPath": "C:\\Users\\g.salvi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\g.salvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[3.6.4, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[3.6.4, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
