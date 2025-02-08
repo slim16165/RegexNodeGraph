@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5L7i4tCjT58=",
+  "dgSpecHash": "CczGtaXcWmc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\RegexNodeGraph.Tests.csproj",
+  "projectFilePath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\RegexNodeGraph\\RegexGraph.Test\\RegexNodeGraph.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\g.salvi\\.nuget\\packages\\microsoft.applicationinsights\\2.22.0\\microsoft.applicationinsights.2.22.0.nupkg.sha512",
     "C:\\Users\\g.salvi\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\9.0.1\\microsoft.bcl.asyncinterfaces.9.0.1.nupkg.sha512",

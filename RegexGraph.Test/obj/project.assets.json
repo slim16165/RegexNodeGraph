@@ -1971,11 +1971,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\RegexNodeGraph.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\RegexNodeGraph\\RegexGraph.Test\\RegexNodeGraph.Tests.csproj",
       "projectName": "UnitTestProject1",
-      "projectPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\RegexNodeGraph.Tests.csproj",
+      "projectPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\RegexNodeGraph\\RegexGraph.Test\\RegexNodeGraph.Tests.csproj",
       "packagesPath": "C:\\Users\\g.salvi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph.Test\\obj\\",
+      "outputPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\RegexNodeGraph\\RegexGraph.Test\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
@@ -1997,8 +1997,8 @@
         "net472": {
           "targetAlias": "net472",
           "projectReferences": {
-            "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph\\RegexNodeGraph.csproj": {
-              "projectPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\MyRegexTester\\RegexGraph\\RegexNodeGraph.csproj"
+            "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\RegexNodeGraph\\RegexGraph\\RegexNodeGraph.csproj": {
+              "projectPath": "C:\\Users\\g.salvi\\Sviluppo\\Git Repository source\\RegexNodeGraph\\RegexGraph\\RegexNodeGraph.csproj"
             }
           }
         }
