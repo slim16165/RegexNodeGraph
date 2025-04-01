@@ -105,7 +105,7 @@ public static class RegexHelper
 
             if (description.IsCategorized && rule.EsciInCasoDiMatch)
             {
-                if(output.Length > 20)
+                if(output.Length > 30)
                     Debugger.Break();
                 description.Category = output;
             }

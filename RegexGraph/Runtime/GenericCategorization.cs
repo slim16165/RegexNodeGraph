@@ -11,10 +11,12 @@ namespace RegexNodeGraph.Runtime;
 public class GenericCategorization
 {
     public RegexRuleBuilder Rules { get; set; }
+    private bool debugProcessSingleDescription;
 
-    public GenericCategorization(RegexRuleBuilder rules)
+    public GenericCategorization(RegexRuleBuilder rules, bool debugProcessSingleDescription)
     {
         Rules = rules;
+        this.debugProcessSingleDescription = debugProcessSingleDescription;
     }
 
     public async Task<(List<Description> transactionDesc, RegexTransformationGraph graph)> CategorizeDescriptions(List<string> descriptions)
@@ -31,7 +33,8 @@ public class GenericCategorization
         List<RegexDescription> regexDescriptions = Rules.Build();
 
         // Flag di debug: se impostato a true, ogni descrizione viene processata singolarmente
-        bool debugProcessSingleDescription = true;
+        
+        debugProcessSingleDescription = true;
 
         await Task.Run(() =>
         {
@@ -64,31 +67,6 @@ public class GenericCategorization
         });
 
         return (transactionDescriptions, graph);
-    }
-
-
-    //TODO: questo metodo dovrebbe passare sul chiamante, così non servirebbero più func ed action
-
-    public static async Task SetCategoryOnOriginalItems<T>(List<T> items, Func<T, string> getDescription, Action<T, string> setCategory,
-        List<Description> transactionDescriptions, RegexTransformationGraph graph)
-    {
-        await Task.Run(() =>
-        {
-            //Questo metodo usa il grafo per individuare la categoria finale (il grafo è stato calcolato prima)
-            Parallel.ForEach(items, item =>
-            {
-                string originalDescription = getDescription(item); //item è la transazione bancaria, il metodo però è generico trn => trn.Description,
-                
-                Description transaction = transactionDescriptions.FirstOrDefault(t => t.OriginalDescription == originalDescription);
-                if (transaction != null)
-                {
-                    setCategory(item, transaction.Category);
-                }
-
-                string category = RegexTransformationGraph.UpdateOriginalItemsWithFinalCategory(originalDescription, graph);
-                setCategory(item, category); //(trn, category) => trn.Category = category
-            });
-        });
     }
 
     public static string GenerateDebugReportForTransaction(Description transaction, RegexTransformationGraph graph)

@@ -1,7 +1,6 @@
 ﻿using PostSharp.Aspects;
 using PostSharp.Serialization;
 using Sentry;
-using System;
 using System.Diagnostics;
 
 [PSerializable]
