@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RegexNodeGraph.Runtime.Graph.Model;
+using RegexNodeGraph.Graph.GraphCore;
 
-namespace RegexNodeGraph.Runtime.Graph;
+namespace RegexNodeGraph.Graph.Processing;
 
 public class CypherQueryGenerator
 {
-    private readonly RegexTransformationGraph _graph;
+    private readonly TransformationGraph _graph;
     private readonly StringBuilder _sb = new StringBuilder();
 
-    public CypherQueryGenerator(RegexTransformationGraph graph)
+    public CypherQueryGenerator(TransformationGraph graph)
     {
         _graph = graph;
     }

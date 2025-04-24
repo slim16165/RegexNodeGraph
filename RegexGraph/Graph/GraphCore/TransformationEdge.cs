@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using RegexNodeGraph.RegexRules;
 
-namespace RegexNodeGraph.Runtime.Graph.Model;
+namespace RegexNodeGraph.Graph.GraphCore;
 
 public class TransformationEdge : GraphEdge
 {
-    public RegexDescription RegexRule { get; set; }
+    public RegexTransformationRule RegexRule { get; set; }
     public int TransformationCount { get; set; }
     public List<RegexDebugData> DebugData { get; set; } = new List<RegexDebugData>();
 }

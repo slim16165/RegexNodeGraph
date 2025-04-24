@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace RegexNodeGraph;
+namespace RegexNodeGraph.RegexRules;
 
-public class RegexRuleBuilder : IEnumerable<RegexDescription>
+public class RegexRuleBuilder : IEnumerable<RegexTransformationRule>
 {
-    private readonly List<RegexDescription> _rules = new List<RegexDescription>();
+    private readonly List<RegexTransformationRule> _rules = new List<RegexTransformationRule>();
 
     /// <summary>
     /// Aggiunge una nuova regola semplice.
@@ -14,7 +15,7 @@ public class RegexRuleBuilder : IEnumerable<RegexDescription>
     public RegexRuleBuilder Add(string from, string to,
         ConfigOptions configOptions = ConfigOptions.NonUscireInCasoDiMatch)
     {
-        _rules.Add(new RegexDescription(from, to, configOptions));
+        _rules.Add(new RegexTransformationRule(from, to, configOptions));
         return this;
     }
 
@@ -24,7 +25,7 @@ public class RegexRuleBuilder : IEnumerable<RegexDescription>
     public RegexRuleBuilder Add(string from, string to, string description,
         List<string> categories = null, ConfigOptions configOptions = ConfigOptions.NonUscireInCasoDiMatch)
     {
-        var regexDescription = new RegexDescription(from, to, description, categories ?? new List<string>(), configOptions);
+        var regexDescription = new RegexTransformationRule(from, to, description, categories ?? new List<string>(), configOptions);
         _rules.Add(regexDescription);
         return this;
     }
@@ -118,12 +119,12 @@ public class RegexRuleBuilder : IEnumerable<RegexDescription>
         return WithOptions(ConfigOptions.EsciInCasoDiMatch);
     }
 
-    public List<RegexDescription> Build()
+    public List<RegexTransformationRule> Build()
     {
         return _rules;
     }
 
-    public IEnumerator<RegexDescription> GetEnumerator()
+    public IEnumerator<RegexTransformationRule> GetEnumerator()
     {
         return _rules.GetEnumerator();
     }
@@ -133,7 +134,7 @@ public class RegexRuleBuilder : IEnumerable<RegexDescription>
         return GetEnumerator();
     }
 
-    public void AddRange(List<RegexDescription> regexDescriptions)
+    public void AddRange(List<RegexTransformationRule> regexDescriptions)
     {
         _rules.AddRange(regexDescriptions);
     }

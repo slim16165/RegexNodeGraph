@@ -3,9 +3,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Neo4j.Driver;
-using RegexNodeGraph.Runtime.Graph.Model;
+using RegexNodeGraph.Graph.GraphCore;
+using RegexNodeGraph.RegexRules;
 
-namespace RegexNodeGraph.Runtime.Graph;
+namespace RegexNodeGraph.Graph.Processing;
 
 public class GraphBuilder
 {
@@ -194,7 +195,7 @@ public class GraphBuilder
         }
     }
 
-    public void AddDetailEdge(string originalTransaction, string transformedTransaction, RegexDescription rule)
+    public void AddDetailEdge(string originalTransaction, string transformedTransaction, RegexTransformationRule rule)
     {
         if (_isTextualMode)
         {

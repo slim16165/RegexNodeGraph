@@ -1,4 +1,6 @@
-﻿namespace RegexNodeGraph.Runtime.Graph.Model;
+﻿using RegexNodeGraph.Model;
+
+namespace RegexNodeGraph.Graph.GraphCore;
 
 public class DetailedTransactionNode : GraphNode
 {

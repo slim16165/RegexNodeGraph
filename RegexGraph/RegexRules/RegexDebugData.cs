@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using RegexNodeGraph.Graph.GraphCore;
 
-namespace RegexNodeGraph.Runtime;
+namespace RegexNodeGraph.RegexRules;
 
 
 /// <summary>
@@ -12,10 +14,10 @@ public class RegexDebugData
     {
     }
 
-    public RegexDebugData(string input, RegexDescription regex, string output, bool isMatch)
+    public RegexDebugData(string input, ITransformationRule regex, string output, bool isMatch)
     {
         Input = input;
-        Regex = regex;
+        TransformationRule = regex;
         Output = output;
         IsMatch = isMatch;
     }
@@ -23,7 +25,7 @@ public class RegexDebugData
     public string Input { get; set; }
     public string Output { get; set; }
 
-    public RegexDescription Regex { get; set; }
+    public ITransformationRule TransformationRule { get; set; }
 
     public bool IsMatch { set; get; }
     public string Match { get; set; }

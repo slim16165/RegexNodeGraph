@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using RegexNodeGraph.Runtime.Graph;
-using RegexNodeGraph.Runtime.Graph.Model;
+using RegexNodeGraph.Graph.GraphCore;
+using RegexNodeGraph.Graph.Processing;
+using RegexNodeGraph.Model;
+using RegexNodeGraph.RegexRules;
 
-namespace RegexNodeGraph.Runtime;
+namespace RegexNodeGraph.Application;
 
 public class GenericCategorization
 {
@@ -19,7 +21,7 @@ public class GenericCategorization
         this.debugProcessSingleDescription = debugProcessSingleDescription;
     }
 
-    public async Task<(List<Description> transactionDesc, RegexTransformationGraph graph)> CategorizeDescriptions(List<string> descriptions)
+    public async Task<(List<Description> transactionDesc, TransformationGraph graph)> CategorizeDescriptions(List<string> descriptions)
     {
         // Converte le stringhe di descrizione in oggetti Description
         List<Description> transactionDescriptions = descriptions
@@ -27,21 +29,31 @@ public class GenericCategorization
             .ToList();
 
         // Crea un nuovo grafo di trasformazione
-        var graph = new RegexTransformationGraph();
+        var graph = new TransformationGraph();
 
         // Costruisce la lista delle regole regex dalla proprietà Rules
-        List<RegexDescription> regexDescriptions = Rules.Build();
+        List<RegexTransformationRule> regexDescriptions = Rules.Build();
 
-        // Flag di debug: se impostato a true, ogni descrizione viene processata singolarmente
-        
-        debugProcessSingleDescription = true;
+        // TODO: Flag di debug: se impostato a true, ogni descrizione viene processata singolarmente
+        // Lascia che sia il flag passato dal chiamante a decidere
+        debugProcessSingleDescription = false;
 
         await Task.Run(() =>
         {
             if (!debugProcessSingleDescription)
             {
-                // Elaborazione batch: costruisce il grafo per tutte le descrizioni insieme
-                graph.BuildGraph(transactionDescriptions, Rules.Build());
+                //// Elaborazione batch: costruisce il grafo per tutte le descrizioni insieme
+                //graph.BuildGraph(transactionDescriptions, Rules.Build());
+
+                Parallel.ForEach(transactionDescriptions, desc =>
+                {
+                    // applichi la pipeline di regex (senza usare il grafo)
+                    foreach (var rule in regexDescriptions)
+                        rule.ApplyReplacement(desc);
+                });
+
+                // una sola BuildGraph alla fine
+                graph.BuildGraph(transactionDescriptions, regexDescriptions);
             }
             else
             {
@@ -49,7 +61,7 @@ public class GenericCategorization
                 for (int i = 0; i < transactionDescriptions.Count; i++)
                 {
                     // Crea una lista contenente solo la descrizione corrente
-                    List<Description> singleDescList = new List<Description> { transactionDescriptions[i] };
+                    List<Description> singleDescList = [transactionDescriptions[i]];
 
                     // Costruisce il grafo per questa singola descrizione
                     graph.BuildGraph(singleDescList, regexDescriptions);
@@ -69,7 +81,7 @@ public class GenericCategorization
         return (transactionDescriptions, graph);
     }
 
-    public static string GenerateDebugReportForTransaction(Description transaction, RegexTransformationGraph graph)
+    public static string GenerateDebugReportForTransaction(Description transaction, TransformationGraph graph)
     {
         // Trova il DetailedTransactionNode associato alla transazione
         var detailedNode = graph.Nodes
@@ -129,7 +141,7 @@ public class GenericCategorization
                 sb.AppendLine($"    Matched: {edge.DebugData.IsMatch}");
                 // Se in futuro si aggiunge la misurazione del tempo, ad esempio:
                 // sb.AppendLine($"    Time Taken: {edge.DebugData.TimeTaken} ms");
-                sb.AppendLine($"    TransformationCount (Rule): {edge.DebugData.Regex.Count}");
+                sb.AppendLine($"    TransformationCount (Rule): {((RegexTransformationRule)edge.DebugData.TransformationRule).Count}");
                 sb.AppendLine();
             }
         }
@@ -178,7 +190,7 @@ public class GenericCategorization
         return sb.ToString();
     }
 
-    public static void GenerateAndLogCypherQueries(RegexTransformationGraph graph, List<Description> transactionDescriptions)
+    public static void GenerateAndLogCypherQueries(TransformationGraph graph, List<Description> transactionDescriptions)
     {
         // Generazione delle query Cypher
         CypherQueryGenerator queryGenerator = new CypherQueryGenerator(graph);

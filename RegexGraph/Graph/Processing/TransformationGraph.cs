@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RegexNodeGraph.Runtime.Graph.Model;
+using RegexNodeGraph.Graph.GraphCore;
+using RegexNodeGraph.Model;
+using RegexNodeGraph.RegexRules;
 
-namespace RegexNodeGraph.Runtime.Graph;
+namespace RegexNodeGraph.Graph.Processing;
 
-public class RegexTransformationGraph
+public class TransformationGraph
 {
     private readonly object _lock = new object();
     public List<GraphNode> Nodes { get; private set; } = new List<GraphNode>();
     public List<GraphEdge> Edges { get; private set; } = new List<GraphEdge>();
 
-    public void BuildGraph(List<Description> descriptions, List<RegexDescription> regexes)
+    public void BuildGraph(List<Description> descriptions, List<RegexTransformationRule> regexes)
     {
         ClearGraph();
 
@@ -90,7 +92,7 @@ public class RegexTransformationGraph
         AddEdge(edge);
     }
 
-    public void AddAggregatedTransformationEdge(AggregatedTransactionsNode source, AggregatedTransactionsNode target, RegexDescription rule, int count, List<RegexDebugData> debugData)
+    public void AddAggregatedTransformationEdge(AggregatedTransactionsNode source, AggregatedTransactionsNode target, RegexTransformationRule rule, int count, List<RegexDebugData> debugData)
     {
         var edge = new TransformationEdge
         {
@@ -103,7 +105,7 @@ public class RegexTransformationGraph
         AddEdge(edge);
     }
 
-    private void AddDetailTransformationEdge(DetailedTransactionNode sourceNode, DetailedTransactionNode targetNode, RegexDescription rule, RegexDebugData debugData)
+    private void AddDetailTransformationEdge(DetailedTransactionNode sourceNode, DetailedTransactionNode targetNode, RegexTransformationRule rule, RegexDebugData debugData)
     {
         var edge = new DetailTransformationEdge
         {
@@ -132,7 +134,7 @@ public class RegexTransformationGraph
             // Evita di creare un self-loop
             if (edge.SourceNode.Id == edge.TargetNode.Id)
             {
-                string regexFrom = edge is TransformationEdge te ? te.RegexRule.From : (edge is DetailTransformationEdge de ? de.RegexRule.From : "");
+                string regexFrom = edge is TransformationEdge te ? te.RegexRule.From : edge is DetailTransformationEdge de ? de.RegexRule.From : "";
                 Console.WriteLine($"Self-loop detected and avoided for node {edge.SourceNode.Id} with regex '{regexFrom}'");
                 return;
             }
@@ -147,7 +149,7 @@ public class RegexTransformationGraph
         }
     }
 
-    private void ProcessNode(AggregatedTransactionsNode node, List<RegexDescription> rules)
+    private void ProcessNode(AggregatedTransactionsNode node, List<RegexTransformationRule> rules)
     {
         foreach (var rule in rules)
         {
@@ -230,7 +232,7 @@ public class RegexTransformationGraph
         }
     }
 
-    private void HandleDetailTransformations(List<(Description sourceDesc, Description targetDesc, RegexDebugData debugInfo)> detailTransformations, RegexDescription rule)
+    private void HandleDetailTransformations(List<(Description sourceDesc, Description targetDesc, RegexDebugData debugInfo)> detailTransformations, RegexTransformationRule rule)
     {
         foreach (var (sourceDesc, targetDesc, debugInfo) in detailTransformations)
         {
@@ -258,7 +260,7 @@ public class RegexTransformationGraph
         }
     }
 
-    private (Description description, RegexDebugData result) ApplyRule(RegexDescription rule, Description description)
+    private (Description description, RegexDebugData result) ApplyRule(RegexTransformationRule rule, Description description)
     {
         // Applichiamo la sostituzione regex, che aggiorna la descrizione se c'è un match
         (var regexDebugData, description) = rule.ApplyReplacement(description);
@@ -276,7 +278,7 @@ public class RegexTransformationGraph
         return (description, regexDebugData);
     }
 
-    private (Description description, RegexDebugData result) HandleRetryFromOriginal(RegexDescription rule, Description description)
+    private (Description description, RegexDebugData result) HandleRetryFromOriginal(RegexTransformationRule rule, Description description)
     {
         var simulatedResult = rule.SimulateApplication(description.OriginalDescription);
 
@@ -301,10 +303,10 @@ public class RegexTransformationGraph
         return (description, simulatedResult);
     }
 
-    public IEnumerable<RegexDescription> FindInterferingRules(string input, RegexDescription rule2)
+    public IEnumerable<RegexTransformationRule> FindInterferingRules(string input, RegexTransformationRule rule2)
     {
         var rules = Edges.OfType<TransformationEdge>().Select(e => e.RegexRule).Distinct().ToList();
-        foreach (RegexDescription rule1 in rules)
+        foreach (RegexTransformationRule rule1 in rules)
         {
             if (rule1 == rule2)
                 break;
@@ -335,7 +337,7 @@ public class RegexTransformationGraph
     /// <param name="originalDescription">La descrizione originale della transazione.</param>
     /// <param name="graph">Il grafo di trasformazioni regex.</param>
     /// <returns>La descrizione finale dopo l'applicazione delle trasformazioni.</returns>
-    public static string UpdateOriginalItemsWithFinalCategory(string originalDescription, RegexTransformationGraph graph)
+    public static string UpdateOriginalItemsWithFinalCategory(string originalDescription, TransformationGraph graph)
     {
         //Recupera il nodo di dettaglio che corrisponde alla descrizione fornita.
         var detailedNode = graph.Nodes
@@ -362,7 +364,7 @@ public class RegexTransformationGraph
     /// <param name="originalInput">La descrizione originale della transazione.</param>
     /// <param name="graph">Il grafo di trasformazioni regex.</param>
     /// <returns>La descrizione finale dopo l'applicazione delle trasformazioni.</returns>
-    private static string FindFinalCategory(string originalInput, RegexTransformationGraph graph)
+    private static string FindFinalCategory(string originalInput, TransformationGraph graph)
     {
         Console.WriteLine($"Inizio categorizzazione per: \"{originalInput}\"");
 
@@ -385,7 +387,7 @@ public class RegexTransformationGraph
     /// <param name="description">La descrizione della transazione da cercare.</param>
     /// <param name="graph">Il grafo di trasformazioni regex.</param>
     /// <returns>Il nodo di dettaglio corrispondente o null se non trovato.</returns>
-    private static DetailedTransactionNode GetDetailedNodeByDescription(string description, RegexTransformationGraph graph)
+    private static DetailedTransactionNode GetDetailedNodeByDescription(string description, TransformationGraph graph)
     {
         var node = graph.Nodes
             .OfType<DetailedTransactionNode>()
@@ -409,7 +411,7 @@ public class RegexTransformationGraph
     /// <param name="startNode">Il nodo di dettaglio iniziale.</param>
     /// <param name="graph">Il grafo di trasformazioni regex.</param>
     /// <returns>Il nodo di dettaglio finale dopo le trasformazioni.</returns>
-    private static DetailedTransactionNode TraverseTransformations(DetailedTransactionNode startNode, RegexTransformationGraph graph)
+    private static DetailedTransactionNode TraverseTransformations(DetailedTransactionNode startNode, TransformationGraph graph)
     {
         var currentNode = startNode;
         var visitedNodes = new HashSet<int> { currentNode.Id };
@@ -458,7 +460,7 @@ public class RegexTransformationGraph
     /// <param name="sourceNode">Il nodo sorgente.</param>
     /// <param name="graph">Il grafo di trasformazioni regex.</param>
     /// <returns>Il primo arco di trasformazione di dettaglio o null se non trovato.</returns>
-    private static DetailTransformationEdge GetFirstDetailTransformationEdge(DetailedTransactionNode sourceNode, RegexTransformationGraph graph)
+    private static DetailTransformationEdge GetFirstDetailTransformationEdge(DetailedTransactionNode sourceNode, TransformationGraph graph)
     {
         var edge = graph.Edges
             .OfType<DetailTransformationEdge>()
@@ -481,7 +483,7 @@ public class RegexTransformationGraph
     /// </summary>
     /// <param name="regexRule">La regola regex da verificare.</param>
     /// <returns>True se la regola specifica di uscire in caso di match, altrimenti False.</returns>
-    private static bool ShouldExitOnMatch(RegexDescription regexRule)
+    private static bool ShouldExitOnMatch(RegexTransformationRule regexRule)
     {
         return (regexRule.ConfigOptions & ConfigOptions.EsciInCasoDiMatch) == ConfigOptions.EsciInCasoDiMatch;
     }

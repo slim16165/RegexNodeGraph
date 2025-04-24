@@ -1,4 +1,4 @@
-﻿namespace RegexNodeGraph.Runtime.Graph.Model;
+﻿namespace RegexNodeGraph.Graph.GraphCore;
 
 public abstract class GraphEdge
 {
