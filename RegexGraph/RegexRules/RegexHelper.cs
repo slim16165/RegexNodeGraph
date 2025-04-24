@@ -66,6 +66,16 @@ public static class RegexHelper
         return match.Success ? match.Groups[1].Value.Split('|') : [];
     }
 
+    public static (TransformationDebugData, Description) ApplyReplacement(this ITransformationRule rule,
+        Description description)
+    {
+        if (rule is RegexTransformationRule regexTransformationRule)
+            return ApplyReplacement(regexTransformationRule, description);
+        
+        throw new InvalidOperationException("Il tipo di regola non è supportato.");
+    }
+
+
     public static (TransformationDebugData res, Description description) ApplyReplacement(this RegexTransformationRule rule, Description description)
     {
         // Utilizziamo CurrentDescription dalla classe

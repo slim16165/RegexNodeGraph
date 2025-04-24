@@ -5,7 +5,7 @@ using RegexNodeGraph.Model;
 
 namespace RegexNodeGraph.RegexRules
 {
-    public class RegexTransformationRule : ITransformationRule, IRuleMetadata
+    public class RegexTransformationRule : TransformationRuleBase, IRegexRuleMetadata
     {
         // Definizione della regex
         public Regex RegexFrom { get; set; }
@@ -26,18 +26,11 @@ namespace RegexNodeGraph.RegexRules
 
         public List<string> Categories { get; set; } = new List<string>();
 
-        // Opzioni di configurazione
-        public ConfigOptions ConfigOptions { get; set; }
-
         // Statistiche di esecuzione
         public int Count { get; private set; }
         public long TotalTime { get; private set; }
         public List<TransformationDebugData> DebugData { get; } = new();
-
-        // Comportamenti su match
-        public bool EsciInCasoDiMatch => (ConfigOptions & ConfigOptions.EsciInCasoDiMatch) == ConfigOptions.EsciInCasoDiMatch;
-        public bool ShouldRetryFromOrig => (ConfigOptions & ConfigOptions.IgnoraRetry) != ConfigOptions.IgnoraRetry;
-
+        
         // Costruttori
         public RegexTransformationRule(string from, string to, ConfigOptions configOptions)
         {
@@ -64,7 +57,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Applica la regola a un oggetto Description e restituisce DebugData e la Description modificata.
         /// </summary>
-        public (TransformationDebugData res, Description description) Apply(Description description)
+        public override (TransformationDebugData res, Description description) Apply(Description description)
         {
             // Si appoggia all'extension method in RegexHelper
             return this.ApplyReplacement(description);
@@ -73,7 +66,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Applica la regola a una stringa di input e restituisce il DebugData.
         /// </summary>
-        public TransformationDebugData Apply(string input)
+        public override TransformationDebugData Apply(string input)
         {
             return this.ApplyReplacement(input);
         }
@@ -81,7 +74,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Simula l'applicazione senza modificare la Description.
         /// </summary>
-        public TransformationDebugData Simulate(string input)
+        public override TransformationDebugData Simulate(string input)
         {
             return this.SimulateApplication(input);
         }

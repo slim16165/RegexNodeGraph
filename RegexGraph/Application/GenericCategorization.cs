@@ -32,7 +32,7 @@ public class GenericCategorization
         var graph = new TransformationGraph();
 
         // Costruisce la lista delle regole regex dalla proprietà Rules
-        List<RegexTransformationRule> regexDescriptions = Rules.Build();
+        List<TransformationRuleBase> regexDescriptions = [..Rules.Build()];
 
         // TODO: Flag di debug: se impostato a true, ogni descrizione viene processata singolarmente
         // Lascia che sia il flag passato dal chiamante a decidere
@@ -133,7 +133,7 @@ public class GenericCategorization
             {
                 sb.AppendLine($"  [Step {step++}]");
 
-                if (edge.Rule is IRuleMetadata metadata)
+                if (edge.Rule is IRegexRuleMetadata metadata)
                 {
                     sb.AppendLine(metadata.ToDebugString());
                 }
@@ -164,7 +164,7 @@ public class GenericCategorization
             foreach (var aggEdge in aggregatedEdges)
             {
                 sb.AppendLine($"  [Aggregated Step {aggStep++}]");
-                if (aggEdge.Rule is IRuleMetadata metadata)
+                if (aggEdge.Rule is IRegexRuleMetadata metadata)
                 {
                     sb.AppendLine(metadata.ToDebugString());
                 }

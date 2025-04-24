@@ -79,14 +79,14 @@ public class CypherQueryGenerator
             {
                 belongsToRelations.Add($"{{fromId: {memberEdge.SourceNode.Id}, toId: {memberEdge.TargetNode.Id}}}");
             }
-            else if (edge is TransformationEdge { Rule: IRuleMetadata meta1 } transEdge)
+            else if (edge is TransformationEdge { Rule: IRegexRuleMetadata meta1 } transEdge)
             {
                 string regexFrom = GetRegexFrom(edge);
                 var escapedRegex = EscapeForCypher(regexFrom);
 
                 aggregatedTransformsRelations.Add($"{{fromId: {transEdge.SourceNode.Id}, toId: {transEdge.TargetNode.Id}, regex: '{escapedRegex}', count: {transEdge.TransformationCount}}}");
             }
-            else if (edge is DetailTransformationEdge { Rule: IRuleMetadata meta2 } detailEdge)
+            else if (edge is DetailTransformationEdge { Rule: IRegexRuleMetadata meta2 } detailEdge)
             {
                 var escapedRegex = EscapeForCypher(meta2.From);
                 detailTransformsRelations.Add($"{{fromId: {detailEdge.SourceNode.Id}, toId: {detailEdge.TargetNode.Id}, regex: '{escapedRegex}'}}");
@@ -170,7 +170,7 @@ public class CypherQueryGenerator
 
     private static string GetRegexFrom(GraphEdge edge)
     {
-        return edge.Rule is IRuleMetadata meta ? meta.From : "";
+        return edge.Rule is IRegexRuleMetadata meta ? meta.From : "";
     }
 
 }

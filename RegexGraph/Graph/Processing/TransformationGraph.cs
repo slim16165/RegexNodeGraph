@@ -13,7 +13,7 @@ public class TransformationGraph
     public List<GraphNode> Nodes { get; private set; } = new List<GraphNode>();
     public List<GraphEdge> Edges { get; private set; } = new List<GraphEdge>();
 
-    public void BuildGraph(List<Description> descriptions, List<RegexTransformationRule> regexes)
+    public void BuildGraph(List<Description> descriptions, List<TransformationRuleBase> regexes)
     {
         ClearGraph();
 
@@ -92,7 +92,7 @@ public class TransformationGraph
         AddEdge(edge);
     }
 
-    public void AddAggregatedTransformationEdge(AggregatedTransactionsNode source, AggregatedTransactionsNode target, RegexTransformationRule rule, int count, List<TransformationDebugData> debugData)
+    public void AddAggregatedTransformationEdge(AggregatedTransactionsNode source, AggregatedTransactionsNode target, TransformationRuleBase rule, int count, List<TransformationDebugData> debugData)
     {
         var edge = new TransformationEdge
         {
@@ -105,7 +105,7 @@ public class TransformationGraph
         AddEdge(edge);
     }
 
-    private void AddDetailTransformationEdge(DetailedTransactionNode sourceNode, DetailedTransactionNode targetNode, RegexTransformationRule rule, TransformationDebugData debugData)
+    private void AddDetailTransformationEdge(DetailedTransactionNode sourceNode, DetailedTransactionNode targetNode, TransformationRuleBase rule, TransformationDebugData debugData)
     {
         var edge = new DetailTransformationEdge
         {
@@ -136,8 +136,8 @@ public class TransformationGraph
             {
                 string regexFrom = edge switch
                 {
-                    TransformationEdge { Rule: IRuleMetadata meta } => meta.From,
-                    DetailTransformationEdge { Rule: IRuleMetadata meta } => meta.From,
+                    TransformationEdge { Rule: IRegexRuleMetadata meta } => meta.From,
+                    DetailTransformationEdge { Rule: IRegexRuleMetadata meta } => meta.From,
                     _ => ""
                 };
 
@@ -156,7 +156,7 @@ public class TransformationGraph
         }
     }
 
-    private void ProcessNode(AggregatedTransactionsNode node, List<RegexTransformationRule> rules)
+    private void ProcessNode(AggregatedTransactionsNode node, List<TransformationRuleBase> rules)
     {
         foreach (var rule in rules)
         {
@@ -239,7 +239,7 @@ public class TransformationGraph
         }
     }
 
-    private void HandleDetailTransformations(List<(Description sourceDesc, Description targetDesc, TransformationDebugData debugInfo)> detailTransformations, RegexTransformationRule rule)
+    private void HandleDetailTransformations(List<(Description sourceDesc, Description targetDesc, TransformationDebugData debugInfo)> detailTransformations, TransformationRuleBase rule)
     {
         foreach (var (sourceDesc, targetDesc, debugInfo) in detailTransformations)
         {
@@ -267,7 +267,7 @@ public class TransformationGraph
         }
     }
 
-    private (Description description, TransformationDebugData result) ApplyRule(RegexTransformationRule rule, Description description)
+    private (Description description, TransformationDebugData result) ApplyRule(TransformationRuleBase rule, Description description)
     {
         // Applichiamo la sostituzione regex, che aggiorna la descrizione se c'è un match
         (var regexDebugData, description) = rule.ApplyReplacement(description);
@@ -285,16 +285,18 @@ public class TransformationGraph
         return (description, regexDebugData);
     }
 
-    private (Description description, TransformationDebugData result) HandleRetryFromOriginal(RegexTransformationRule rule, Description description)
+    private (Description description, TransformationDebugData result) HandleRetryFromOriginal(TransformationRuleBase rule, Description description)
     {
-        var simulatedResult = rule.SimulateApplication(description.OriginalDescription);
+        var simulatedResult = rule.Simulate(description.OriginalDescription);
 
         if (simulatedResult.IsMatch)
         {
             var breakingRules = FindInterferingRules(description.OriginalDescription, rule).ToList();
             if (breakingRules.Any())
             {
-                string log = $"La regola '{breakingRules[0].From}' (applicata prima) sta interferendo con la regola corrente '{rule.From}'. L'input originale era '{description.OriginalDescription}'.";
+                string from = rule is IRegexRuleMetadata m ? m.From : "<no-pattern>";
+
+                string log = $"La regola '{breakingRules[0].From}' (applicata prima) sta interferendo con la regola corrente '{from}'. L'input originale era '{description.OriginalDescription}'.";
                 // Log o gestione dell'interferenza
                 // Utilizza un logger appropriato invece di Console.WriteLine
                 Console.WriteLine(log);
@@ -310,7 +312,7 @@ public class TransformationGraph
         return (description, simulatedResult);
     }
 
-    public IEnumerable<RegexTransformationRule> FindInterferingRules(string input, RegexTransformationRule rule2)
+    public IEnumerable<RegexTransformationRule> FindInterferingRules(string input, TransformationRuleBase rule2)
     {
         var rules = Edges.OfType<TransformationEdge>().Select(e => e.Rule).Distinct().ToList();
         foreach (var transformationRule in rules)
