@@ -66,7 +66,7 @@ public static class RegexHelper
         return match.Success ? match.Groups[1].Value.Split('|') : [];
     }
 
-    public static (RegexDebugData res, Description description) ApplyReplacement(this RegexTransformationRule rule, Description description)
+    public static (TransformationDebugData res, Description description) ApplyReplacement(this RegexTransformationRule rule, Description description)
     {
         // Utilizziamo CurrentDescription dalla classe
         string input = description.CurrentDescription ?? string.Empty;
@@ -84,7 +84,7 @@ public static class RegexHelper
 
         stopwatch.Stop();
 
-        var res = new RegexDebugData(input, rule, output, isMatch);
+        var res = new TransformationDebugData(input, rule, output, isMatch);
 
         if (isMatch && output != input)
         {
@@ -119,7 +119,7 @@ public static class RegexHelper
     }
 
 
-    public static RegexDebugData ApplyReplacement(this RegexTransformationRule rule, string input)
+    public static TransformationDebugData ApplyReplacement(this RegexTransformationRule rule, string input)
     {
         input ??= "";
         string output = input;
@@ -132,7 +132,7 @@ public static class RegexHelper
 
         stopwatch.Stop();
 
-        var res = new RegexDebugData(input, rule, output, isMatch);
+        var res = new TransformationDebugData(input, rule, output, isMatch);
 
         if (isMatch /*output != input*/)
         {
@@ -150,14 +150,14 @@ public static class RegexHelper
         return res;
     }
 
-    public static RegexDebugData SimulateApplication(this RegexTransformationRule r, string input)
+    public static TransformationDebugData SimulateApplication(this RegexTransformationRule r, string input)
     {
         input ??= "";
 
         string output = r.RegexFrom.Replace(input, r.To);
         bool isMatch = !ReferenceEquals(input, output);   // oppure input != output
 
-        var res = new RegexDebugData(input, r, output, isMatch);
+        var res = new TransformationDebugData(input, r, output, isMatch);
 
         return res;
     }

@@ -1,10 +1,9 @@
-﻿using RegexNodeGraph.RegexRules;
+﻿using RegexNodeGraph.Model;
 
 namespace RegexNodeGraph.Graph.GraphCore;
 
 public class DetailTransformationEdge : GraphEdge
 {
-    public RegexTransformationRule RegexRule { get; set; }
-    public RegexDebugData DebugData { get; set; }
+    public TransformationDebugData DebugData { get; set; }
     // Trasformazioni a livello di singola transazione
 }

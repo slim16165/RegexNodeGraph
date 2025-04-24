@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using RegexNodeGraph.Graph.GraphCore;
 using RegexNodeGraph.Model;
 
 namespace RegexNodeGraph.RegexRules
 {
-    public class RegexTransformationRule : ITransformationRule
+    public class RegexTransformationRule : ITransformationRule, IRuleMetadata
     {
         // Definizione della regex
         public Regex RegexFrom { get; set; }
@@ -15,20 +14,25 @@ namespace RegexNodeGraph.RegexRules
         // Replacement e metadata
         public string To { get; set; }
         public string Description { get; set; }
+        public string ToDebugString()
+        {
+            return $"""
+                        Regex From: {From}
+                        Regex To: {To}
+                        Rule Description: {Description}
+                        Categories: {string.Join(", ", Categories)}
+                    """;
+        }
+
         public List<string> Categories { get; set; } = new List<string>();
 
         // Opzioni di configurazione
-        private ConfigOptions _configOptions;
-        public ConfigOptions ConfigOptions
-        {
-            get => _configOptions;
-            set => _configOptions = value;
-        }
+        public ConfigOptions ConfigOptions { get; set; }
 
         // Statistiche di esecuzione
         public int Count { get; private set; }
         public long TotalTime { get; private set; }
-        public List<RegexDebugData> DebugData { get; } = new();
+        public List<TransformationDebugData> DebugData { get; } = new();
 
         // Comportamenti su match
         public bool EsciInCasoDiMatch => (ConfigOptions & ConfigOptions.EsciInCasoDiMatch) == ConfigOptions.EsciInCasoDiMatch;
@@ -60,7 +64,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Applica la regola a un oggetto Description e restituisce DebugData e la Description modificata.
         /// </summary>
-        public (RegexDebugData res, Description description) Apply(Description description)
+        public (TransformationDebugData res, Description description) Apply(Description description)
         {
             // Si appoggia all'extension method in RegexHelper
             return this.ApplyReplacement(description);
@@ -69,7 +73,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Applica la regola a una stringa di input e restituisce il DebugData.
         /// </summary>
-        public RegexDebugData Apply(string input)
+        public TransformationDebugData Apply(string input)
         {
             return this.ApplyReplacement(input);
         }
@@ -77,7 +81,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Simula l'applicazione senza modificare la Description.
         /// </summary>
-        public RegexDebugData Simulate(string input)
+        public TransformationDebugData Simulate(string input)
         {
             return this.SimulateApplication(input);
         }
@@ -85,7 +89,7 @@ namespace RegexNodeGraph.RegexRules
         /// <summary>
         /// Incrementa il contatore di applicazioni della regola e registra il tempo impiegato.
         /// </summary>
-        public void IncrementCount(RegexDebugData res, long timeTaken)
+        public void IncrementCount(TransformationDebugData res, long timeTaken)
         {
             Count++;
             TotalTime += timeTaken;

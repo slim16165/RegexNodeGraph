@@ -92,26 +92,26 @@ public class TransformationGraph
         AddEdge(edge);
     }
 
-    public void AddAggregatedTransformationEdge(AggregatedTransactionsNode source, AggregatedTransactionsNode target, RegexTransformationRule rule, int count, List<RegexDebugData> debugData)
+    public void AddAggregatedTransformationEdge(AggregatedTransactionsNode source, AggregatedTransactionsNode target, RegexTransformationRule rule, int count, List<TransformationDebugData> debugData)
     {
         var edge = new TransformationEdge
         {
             SourceNode = source,
             TargetNode = target,
-            RegexRule = rule,
+            Rule = rule,
             TransformationCount = count,
             DebugData = debugData
         };
         AddEdge(edge);
     }
 
-    private void AddDetailTransformationEdge(DetailedTransactionNode sourceNode, DetailedTransactionNode targetNode, RegexTransformationRule rule, RegexDebugData debugData)
+    private void AddDetailTransformationEdge(DetailedTransactionNode sourceNode, DetailedTransactionNode targetNode, RegexTransformationRule rule, TransformationDebugData debugData)
     {
         var edge = new DetailTransformationEdge
         {
             SourceNode = sourceNode,
             TargetNode = targetNode,
-            RegexRule = rule,
+            Rule = rule,
             DebugData = debugData
         };
         AddEdge(edge);
@@ -134,10 +134,17 @@ public class TransformationGraph
             // Evita di creare un self-loop
             if (edge.SourceNode.Id == edge.TargetNode.Id)
             {
-                string regexFrom = edge is TransformationEdge te ? te.RegexRule.From : edge is DetailTransformationEdge de ? de.RegexRule.From : "";
+                string regexFrom = edge switch
+                {
+                    TransformationEdge { Rule: IRuleMetadata meta } => meta.From,
+                    DetailTransformationEdge { Rule: IRuleMetadata meta } => meta.From,
+                    _ => ""
+                };
+
                 Console.WriteLine($"Self-loop detected and avoided for node {edge.SourceNode.Id} with regex '{regexFrom}'");
                 return;
             }
+
 
             Edges.Add(edge);
 
@@ -232,7 +239,7 @@ public class TransformationGraph
         }
     }
 
-    private void HandleDetailTransformations(List<(Description sourceDesc, Description targetDesc, RegexDebugData debugInfo)> detailTransformations, RegexTransformationRule rule)
+    private void HandleDetailTransformations(List<(Description sourceDesc, Description targetDesc, TransformationDebugData debugInfo)> detailTransformations, RegexTransformationRule rule)
     {
         foreach (var (sourceDesc, targetDesc, debugInfo) in detailTransformations)
         {
@@ -260,7 +267,7 @@ public class TransformationGraph
         }
     }
 
-    private (Description description, RegexDebugData result) ApplyRule(RegexTransformationRule rule, Description description)
+    private (Description description, TransformationDebugData result) ApplyRule(RegexTransformationRule rule, Description description)
     {
         // Applichiamo la sostituzione regex, che aggiorna la descrizione se c'è un match
         (var regexDebugData, description) = rule.ApplyReplacement(description);
@@ -278,7 +285,7 @@ public class TransformationGraph
         return (description, regexDebugData);
     }
 
-    private (Description description, RegexDebugData result) HandleRetryFromOriginal(RegexTransformationRule rule, Description description)
+    private (Description description, TransformationDebugData result) HandleRetryFromOriginal(RegexTransformationRule rule, Description description)
     {
         var simulatedResult = rule.SimulateApplication(description.OriginalDescription);
 
@@ -305,9 +312,10 @@ public class TransformationGraph
 
     public IEnumerable<RegexTransformationRule> FindInterferingRules(string input, RegexTransformationRule rule2)
     {
-        var rules = Edges.OfType<TransformationEdge>().Select(e => e.RegexRule).Distinct().ToList();
-        foreach (RegexTransformationRule rule1 in rules)
+        var rules = Edges.OfType<TransformationEdge>().Select(e => e.Rule).Distinct().ToList();
+        foreach (var transformationRule in rules)
         {
+            var rule1 = (RegexTransformationRule)transformationRule;
             if (rule1 == rule2)
                 break;
 
@@ -426,8 +434,7 @@ public class TransformationGraph
                 break;
             }
 
-            var targetNode = transformationEdge.TargetNode as DetailedTransactionNode;
-            if (targetNode == null)
+            if (transformationEdge.TargetNode is not DetailedTransactionNode targetNode)
             {
                 Console.WriteLine($"L'arco di trasformazione porta a un nodo non di dettaglio (ID {transformationEdge.TargetNode.Id}). Traversata terminata.");
                 break;
@@ -443,7 +450,7 @@ public class TransformationGraph
             visitedNodes.Add(currentNode.Id);
             Console.WriteLine($"Trasformazione applicata: Nodo ID {currentNode.Id}, Descrizione: \"{currentNode.Description.CurrentDescription}\"");
 
-            if (ShouldExitOnMatch(transformationEdge.RegexRule))
+            if (ShouldExitOnMatch(transformationEdge.Rule as RegexTransformationRule))
             {
                 Console.WriteLine("Opzione EsciInCasoDiMatch rilevata. Traversata terminata.");
                 break;
@@ -468,7 +475,7 @@ public class TransformationGraph
 
         if (edge != null)
         {
-            Console.WriteLine($"Arco di trasformazione trovato: RegEx '{edge.RegexRule.From}', Target Node ID {edge.TargetNode.Id}");
+            Console.WriteLine($"Arco di trasformazione trovato: RegEx '{((RegexTransformationRule)edge.Rule).From}', Target Node ID {edge.TargetNode.Id}");
         }
         else
         {

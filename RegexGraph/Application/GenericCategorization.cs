@@ -132,16 +132,18 @@ public class GenericCategorization
             foreach (var edge in detailEdges)
             {
                 sb.AppendLine($"  [Step {step++}]");
-                sb.AppendLine($"    Regex From: {edge.RegexRule.From}");
-                sb.AppendLine($"    Regex To: {edge.RegexRule.To}");
-                sb.AppendLine($"    Rule Description: {edge.RegexRule.Description}");
-                sb.AppendLine($"    Categories: {string.Join(", ", edge.RegexRule.Categories)}");
+
+                if (edge.Rule is IRuleMetadata metadata)
+                {
+                    sb.AppendLine(metadata.ToDebugString());
+                }
+
                 sb.AppendLine($"    Input: {edge.DebugData.Input}");
                 sb.AppendLine($"    Output: {edge.DebugData.Output}");
                 sb.AppendLine($"    Matched: {edge.DebugData.IsMatch}");
                 // Se in futuro si aggiunge la misurazione del tempo, ad esempio:
                 // sb.AppendLine($"    Time Taken: {edge.DebugData.TimeTaken} ms");
-                sb.AppendLine($"    TransformationCount (Rule): {((RegexTransformationRule)edge.DebugData.TransformationRule).Count}");
+                sb.AppendLine($"    TransformationCount (Rule): {((RegexTransformationRule)edge.DebugData.Rule).Count}");
                 sb.AppendLine();
             }
         }
@@ -162,10 +164,10 @@ public class GenericCategorization
             foreach (var aggEdge in aggregatedEdges)
             {
                 sb.AppendLine($"  [Aggregated Step {aggStep++}]");
-                sb.AppendLine($"    Regex From: {aggEdge.RegexRule.From}");
-                sb.AppendLine($"    Regex To: {aggEdge.RegexRule.To}");
-                sb.AppendLine($"    Rule Description: {aggEdge.RegexRule.Description}");
-                sb.AppendLine($"    Categories: {string.Join(", ", aggEdge.RegexRule.Categories)}");
+                if (aggEdge.Rule is IRuleMetadata metadata)
+                {
+                    sb.AppendLine(metadata.ToDebugString());
+                }
                 sb.AppendLine($"    TransformationCount (edge): {aggEdge.TransformationCount}");
                 if (verbose && aggEdge.DebugData.Any())
                 {

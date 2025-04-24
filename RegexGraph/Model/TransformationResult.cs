@@ -1,4 +1,4 @@
-﻿namespace RegexNodeGraph.Graph.GraphCore;
+﻿namespace RegexNodeGraph.Model;
 
 public record TransformationResult(
     string Input,
