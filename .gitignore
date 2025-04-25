@@ -120,3 +120,4 @@ _ReSharper*/
 .idea/
 *.sln.iml
 /RegexGraph/CombinedFile.cs
+CombinedFile.cs
