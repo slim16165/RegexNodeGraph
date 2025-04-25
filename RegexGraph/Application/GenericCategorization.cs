@@ -3,83 +3,95 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using RegexNodeGraph.Engine;                    // ← motore puro
 using RegexNodeGraph.Graph.GraphCore;
-using RegexNodeGraph.Graph.Processing;
+using RegexNodeGraph.Graph.Processing;          // ← builder + graph DTO
 using RegexNodeGraph.Model;
 using RegexNodeGraph.RegexRules;
 
 namespace RegexNodeGraph.Application;
 
-public class GenericCategorization
+public partial class GenericCategorization
 {
-    public RegexRuleBuilder Rules { get; set; }
-    private bool debugProcessSingleDescription;
+    private RegexRuleBuilder _rules;
+    private readonly bool _debugProcessSingleDescription;
+    private readonly int _debugLengthThreshold;
 
-    public GenericCategorization(RegexRuleBuilder rules, bool debugProcessSingleDescription)
+    public GenericCategorization(
+        RegexRuleBuilder rules,
+        bool debugProcessSingleDescription = false, 
+        int debugLengthThreshold = 40)
     {
-        Rules = rules;
-        this.debugProcessSingleDescription = debugProcessSingleDescription;
+        _rules = rules;
+        _debugProcessSingleDescription = debugProcessSingleDescription;
     }
 
-    public async Task<(List<Description> transactionDesc, TransformationGraph graph)> CategorizeDescriptions(List<string> descriptions)
+    /// <summary>
+    /// Se <paramref name="buildGraph"/> = <c>false</c> il grafo NON viene costruito
+    /// (più veloce, nessuna dipendenza da Neo4j).
+    /// </summary>
+    public async Task<(List<Description> descriptions,
+                       TransformationGraph? graph)> CategorizeDescriptionsAsync(
+                       List<string> rawDescriptions,
+                       bool buildGraph = true)
     {
-        // Converte le stringhe di descrizione in oggetti Description
-        List<Description> transactionDescriptions = descriptions
-            .Select(desc => new Description(desc))
+        // 1) converte input in Description
+        var descriptions = rawDescriptions
+            .Select(d => new Description(d))
             .ToList();
 
-        // Crea un nuovo grafo di trasformazione
-        var graph = new TransformationGraph();
+        // 2) prepara regole
+        var rules = _rules.Build()
+                          .Cast<TransformationRuleBase>()
+                          .ToList();
 
-        // Costruisce la lista delle regole regex dalla proprietà Rules
-        List<TransformationRuleBase> regexDescriptions = [..Rules.Build()];
+        // 3) esegue il motore (NON blocca l’UI)
+        var engine = new TransformationEngine();
+        var records = await Task.Run(() =>
+                        engine.Run(descriptions, rules).ToList());
 
-        // TODO: Flag di debug: se impostato a true, ogni descrizione viene processata singolarmente
-        // Lascia che sia il flag passato dal chiamante a decidere
-        debugProcessSingleDescription = false;
-
-        await Task.Run(() =>
+        // 4) opzionalmente costruisce il grafo
+        TransformationGraph? graph = null;
+        if (buildGraph)
         {
-            if (!debugProcessSingleDescription)
+            var builder = new GraphBuilderFromRecords();
+            var (nodes, edges) = builder.Build(records);
+
+            graph = new TransformationGraph
             {
-                //// Elaborazione batch: costruisce il grafo per tutte le descrizioni insieme
-                //graph.BuildGraph(transactionDescriptions, Rules.Build());
+                Nodes = nodes.ToList(),
+                Edges = edges.ToList()
+            };
+        }
 
-                Parallel.ForEach(transactionDescriptions, desc =>
-                {
-                    // applichi la pipeline di regex (senza usare il grafo)
-                    foreach (var rule in regexDescriptions)
-                        rule.ApplyReplacement(desc);
-                });
+        // — DEBUG single description (opzionale) —
+        if (_debugProcessSingleDescription && graph is not null)
+        {
+            foreach (var d in descriptions.Where(d => d.CurrentDescription.Length > 40 /* _debugProcessSingleDescription */))
+                Console.WriteLine(GenerateDebugReportForTransaction(d, graph));
+        }
 
-                // una sola BuildGraph alla fine
-                graph.BuildGraph(transactionDescriptions, regexDescriptions);
-            }
-            else
-            {
-                // Elaborazione singola: processa ogni descrizione separatamente
-                for (int i = 0; i < transactionDescriptions.Count; i++)
-                {
-                    // Crea una lista contenente solo la descrizione corrente
-                    List<Description> singleDescList = [transactionDescriptions[i]];
-
-                    // Costruisce il grafo per questa singola descrizione
-                    graph.BuildGraph(singleDescList, regexDescriptions);
-
-                    // Se la descrizione trasformata è "larga" (più di 40 caratteri),
-                    // genera e stampa un report di debug
-                    if (singleDescList[0].CurrentDescription.Length > 40)
-                    {
-                        string debugReport = GenerateDebugReportForTransaction(singleDescList[0], graph);
-                        Console.WriteLine(debugReport);
-                        // Debugger.Break(); // Decommenta se desideri interrompere l'esecuzione per il debug
-                    }
-                }
-            }
-        });
-
-        return (transactionDescriptions, graph);
+        return (descriptions, graph);
     }
+
+    #region ––––– DEBUG report (immutato) –––––
+    //  tutto il tuo metodo GenerateDebugReportForTransaction rimane invariato
+    #endregion
+
+    #region ––––– Utility per Cypher (facoltativa) –––––
+    public static void GenerateAndLogCypherQueries(TransformationGraph graph,
+                                                   List<Description> desc)
+    {
+        var queryGenerator = new CypherQueryGenerator(graph);
+        string cypher = queryGenerator.GenerateCypherQueries();
+        Console.WriteLine("Cypher Queries:\n" + cypher);
+
+        string sample = JsonSerializer.Serialize(
+            desc.Where(d => d.CurrentDescription.Length > 20),
+            new JsonSerializerOptions { WriteIndented = true });
+        Console.WriteLine(sample);
+    }
+    #endregion
 
     public static string GenerateDebugReportForTransaction(Description transaction, TransformationGraph graph)
     {
@@ -190,21 +202,5 @@ public class GenericCategorization
 
         sb.AppendLine("=== END OF DEBUG REPORT ===");
         return sb.ToString();
-    }
-
-    public static void GenerateAndLogCypherQueries(TransformationGraph graph, List<Description> transactionDescriptions)
-    {
-        // Generazione delle query Cypher
-        CypherQueryGenerator queryGenerator = new CypherQueryGenerator(graph);
-        string cypherQueries = queryGenerator.GenerateCypherQueries();
-
-        // Stampa o salvataggio delle query
-        Console.WriteLine("Cypher Queries:");
-        Console.WriteLine(cypherQueries);
-
-        List<Description> filtered = transactionDescriptions.Where(s => s.CurrentDescription.Length > 20).ToList();
-
-
-        string s = JsonSerializer.Serialize(filtered, new JsonSerializerOptions { WriteIndented = true });
     }
 }

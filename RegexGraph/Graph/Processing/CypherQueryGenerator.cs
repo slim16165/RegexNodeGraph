@@ -148,7 +148,14 @@ public class CypherQueryGenerator
         return _sb.ToString();
     }
 
-    public static string EscapeForCypher(string s) => s.Replace("'", "\\'");
+    public static string EscapeForCypher(string s)
+        => s
+            .Replace("\\", "\\\\")
+            .Replace("'", "\\'")
+            .Replace("\"", "\\\"")
+            .Replace("\r\n", "\\n")
+            .Replace("\n", "\\n");
+
 
     private void GenerateConstraints()
     {

@@ -66,7 +66,7 @@ public static class RegexHelper
         return match.Success ? match.Groups[1].Value.Split('|') : [];
     }
 
-    public static (TransformationDebugData, Description) ApplyReplacement(this ITransformationRule rule,
+    public static (TransformationDebugData, Description) ApplyReplacement(this TransformationRuleBase rule,
         Description description)
     {
         if (rule is RegexTransformationRule regexTransformationRule)
