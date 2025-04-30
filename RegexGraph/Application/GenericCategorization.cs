@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -19,11 +20,12 @@ public partial class GenericCategorization
 
     public GenericCategorization(
         RegexRuleBuilder rules,
-        bool debugProcessSingleDescription = false, 
+        bool debugProcessSingleDescription = false,
         int debugLengthThreshold = 40)
     {
         _rules = rules;
         _debugProcessSingleDescription = debugProcessSingleDescription;
+        _debugLengthThreshold = debugLengthThreshold;
     }
 
     /// <summary>
@@ -33,22 +35,38 @@ public partial class GenericCategorization
     public async Task<(List<Description> descriptions,
                        TransformationGraph? graph)> CategorizeDescriptionsAsync(
                        List<string> rawDescriptions,
-                       bool buildGraph = true)
+                       bool buildGraph = false)
     {
         // 1) converte input in Description
         var descriptions = rawDescriptions
             .Select(d => new Description(d))
             .ToList();
 
-        // 2) prepara regole
-        var rules = _rules.Build()
-                          .Cast<TransformationRuleBase>()
-                          .ToList();
+        // 2) batching sulle descrizioni, calcolato in base ai core
+        int processorCount = Environment.ProcessorCount;
+        int batchSize = Math.Max(1, (descriptions.Count + processorCount - 1) / processorCount);
+        var batches = CreateBatches(descriptions, batchSize);
 
-        // 3) esegue il motore (NON blocca l’UI)
-        var engine = new TransformationEngine();
-        var records = await Task.Run(() =>
-                        engine.Run(descriptions, rules).ToList());
+        // 3) esegue in parallelo ogni batch, raccogliendo i record
+        var bag = new ConcurrentBag<TransformationRecord>();
+        await Task.Run(() =>
+        {
+            var options = new ParallelOptions { MaxDegreeOfParallelism = processorCount };
+            Parallel.ForEach(batches, options, batch =>
+            {
+                // cloniamo le regole per evitare race sui contatori interni
+                var localRules = _rules
+                    .Build()
+                    .Cast<TransformationRuleBase>()
+                    .ToList();
+
+                var engine = new TransformationEngine();
+                var recs = engine.Run(batch, localRules).ToList();
+                foreach (var r in recs)
+                    bag.Add(r);
+            });
+        });
+        var records = bag.ToList();
 
         // 4) opzionalmente costruisce il grafo
         TransformationGraph? graph = null;
@@ -67,21 +85,35 @@ public partial class GenericCategorization
         // — DEBUG single description (opzionale) —
         if (_debugProcessSingleDescription && graph is not null)
         {
-            foreach (var d in descriptions.Where(d => d.CurrentDescription.Length > 40 /* _debugProcessSingleDescription */))
+            foreach (var d in descriptions.Where(d => d.CurrentDescription.Length > _debugLengthThreshold))
                 Console.WriteLine(GenerateDebugReportForTransaction(d, graph));
         }
 
         return (descriptions, graph);
     }
 
-    #region ––––– DEBUG report (immutato) –––––
+    #region ––––– Utility di batching interna –––––
+    private static IEnumerable<List<Description>> CreateBatches(
+        List<Description> source, int batchSize)
+    {
+        for (int i = 0; i < source.Count; i += batchSize)
+        {
+            yield return source
+                .GetRange(i, Math.Min(batchSize, source.Count - i));
+        }
+    }
+    #endregion
+
+    #region ––––– DEBUG report –––––
     //  tutto il tuo metodo GenerateDebugReportForTransaction rimane invariato
     #endregion
 
-    #region ––––– Utility per Cypher (facoltativa) –––––
-    public static void GenerateAndLogCypherQueries(TransformationGraph graph,
-                                                   List<Description> desc)
+    #region ––––– Utility per Cypher –––––
+    public static void GenerateAndLogCypherQueries(TransformationGraph graph, List<Description> desc)
     {
+        if (graph == null)
+            return;
+
         var queryGenerator = new CypherQueryGenerator(graph);
         string cypher = queryGenerator.GenerateCypherQueries();
         Console.WriteLine("Cypher Queries:\n" + cypher);
@@ -95,7 +127,6 @@ public partial class GenericCategorization
 
     public static string GenerateDebugReportForTransaction(Description transaction, TransformationGraph graph)
     {
-        // Trova il DetailedTransactionNode associato alla transazione
         var detailedNode = graph.Nodes
             .OfType<DetailedTransactionNode>()
             .FirstOrDefault(n => n.Description == transaction);
@@ -121,7 +152,7 @@ public partial class GenericCategorization
         sb.AppendLine();
 
         // --- Sezione: Trasformazioni a livello di dettaglio ---
-		// Ora recuperiamo le trasformazioni. Possiamo traversare il grafo partendo dal detailedNode
+        // Ora recuperiamo le trasformazioni. Possiamo traversare il grafo partendo dal detailedNode
         // e guardando tutti gli archi di trasformazione usati.
         // Nel caso di questa implementazione, diamo per scontato che ci sia un modo lineare di risalire alle regole.
         // Se ci sono molte trasformazioni, potremmo fare un BFS/DFS per ordinare i passaggi.
@@ -162,7 +193,7 @@ public partial class GenericCategorization
         sb.AppendLine();
 
         // --- Sezione: Trasformazioni Aggregate ---
-		// Se vogliamo tracciare anche le trasformazioni aggregate (AggregatedTransactionsNode)
+        // Se vogliamo tracciare anche le trasformazioni aggregate (AggregatedTransactionsNode)
         // Possiamo guardare i TransformationEdge
         var aggregatedEdges = graph.Edges
             .OfType<TransformationEdge>()
