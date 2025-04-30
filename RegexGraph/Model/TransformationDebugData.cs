@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
-namespace RegexNodeGraph.Runtime;
+namespace RegexNodeGraph.Model;
 
 
 /// <summary>
 /// Represents the details of a regex replacement operation.
 /// </summary>
-public class RegexDebugData
+public class TransformationDebugData
 {
-    public RegexDebugData()
+    public TransformationDebugData()
     {
     }
 
-    public RegexDebugData(string input, RegexDescription regex, string output, bool isMatch)
+    public TransformationDebugData(string input, ITransformationRule rule, string output, bool isMatch)
     {
         Input = input;
-        Regex = regex;
+        Rule = rule;
         Output = output;
         IsMatch = isMatch;
     }
@@ -23,7 +24,7 @@ public class RegexDebugData
     public string Input { get; set; }
     public string Output { get; set; }
 
-    public RegexDescription Regex { get; set; }
+    public ITransformationRule Rule { get; set; }
 
     public bool IsMatch { set; get; }
     public string Match { get; set; }

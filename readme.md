@@ -1,147 +1,142 @@
-﻿# RegexNodeGraph
+﻿# RegexNodeGraph  
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![NuGet](https://img.shields.io/nuget/v/RegexNodeGraph.svg)
-![Build Status](https://img.shields.io/github/actions/workflow/status/YourUsername/RegexNodeGraph/build.yml)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)  
+![NuGet](https://img.shields.io/nuget/v/RegexNodeGraph.svg)  
+![Build Status](https://img.shields.io/github/actions/workflow/status/YourUsername/RegexNodeGraph/build.yml)  
+
+**Versione:** 1.1.0 (2025-04-26)  
+
+---
 
 ## 🚀 Introduzione
 
-**RegexNodeGraph** è una libreria avanzata per la gestione di regole di trasformazione testuale basate su espressioni regolari (regex). Oltre a fornire un motore di matching e sostituzione, traccia l’evoluzione dei testi trasformati attraverso una struttura a grafo, consentendo analisi e debug approfonditi anche su grandi volumi di dati.
+**RegexNodeGraph** è una libreria avanzata per la gestione di regole di trasformazione testuale basate su espressioni regolari. A partire dalla versione **1.1.0**, la logica di applicazione delle regex è stata **separata** dalla struttura a grafo, migliorando modularità e manutenibilità:
+
+- **`RegexDescription`** rimane un **DTO** (pattern, replacement, metadata).
+- **`ITransformationRule`** definisce il contratto generico per ogni regola.
+- **`RegexTransformationRule`** incapsula l’esecuzione (Apply/Simulate) e il tracciamento thread-safe.
+- **`TransformationGraph`** (ex `RegexTransformationGraph`) gestisce la topologia del grafo senza dipendere dall’implementazione delle regole.
+
+Questa architettura permette in futuro di integrare **regole non-regex** (AI, NLP, normalizzazioni) semplicemente offrendo nuove implementazioni di `ITransformationRule`.
+
+---
 
 ## 🎯 Obiettivi e Visione
 
-RegexNodeGraph è stata progettata per chiunque debba:
+RegexNodeGraph è pensata per chi deve:
 
-- Applicare regole di trasformazione a testi di varia natura (es. descrizioni di transazioni bancarie, log, stringhe libere).
-- Monitorare con precisione come ciascuna regola interviene su ogni stringa.
-- Analizzare le trasformazioni in profondità, identificando conflitti o sovrapposizioni di regex.
+- Applicare regole di trasformazione a testi di vario tipo (transazioni bancarie, log, descrizioni libere).
+- Monitorare con precisione ogni passaggio di trasformazione.
+- Analizzare conflitti e sovrapposizioni tramite una **struttura a grafo**.
+- Esportare il grafo in database come **Neo4j** per query avanzate.
 
-### **Perché una Struttura a Grafo?**
+---
 
-Utilizzare un grafo per tracciare le trasformazioni offre numerosi vantaggi:
-
-- **Tracciabilità Completa**: Ogni passaggio ha un nodo dedicato e un arco che indica la regola applicata.
-- **Analisi di Conflitti e Sovrapposizioni**: Il grafo evidenzia chiaramente le interazioni tra regole.
-- **Storico dei Cambiamenti**: Permette di risalire alle versioni precedenti del testo e alle regole che le hanno generate.
-- **Integrazione con Database Grafici**: Esporta facilmente la struttura a grafo in database come Neo4j per query avanzate.
-
-## ⚙️ Come Funziona
-
-### 1. Definizione delle Regole di Trasformazione
-
-Utilizza `RegexRuleBuilder` per definire regole di trasformazione in modo fluido:
-
-```csharp
-var builder = new RegexRuleBuilder()
-    .Add(@"(pizza)", "panino", "Sostituzione di 'pizza' con 'panino'")
-    .Categorize("Cibo")
-    .Add(@"(\d{4}-\d{2}-\d{2})", "DATA", "Mascheramento delle date")
-    // Aggiungi altre regole...
-    .Build();
-```
-
-### 2. Esecuzione delle Trasformazioni
-
-Applica le regole definite a un insieme di stringhe, generando sia le stringhe trasformate sia un log dettagliato delle sostituzioni:
-
-```csharp
-var categorization = new GenericCategorization(builder);
-var listaDiStringhe = new List<string> {
-    "Ho ordinato una pizza il 2024-11-03",
-    "Nessuna data qui" 
-};
-
-var risultato = categorization.CategorizeDescriptions(listaDiStringhe);
-
-// Stringhe trasformate
-var testiFinali = risultato.Transformate; 
-// Grafo delle trasformazioni
-var grafoTrasformazioni = risultato.Graph;
-```
-
-### 3. Struttura a Grafo e Debug
-
-Il grafo delle trasformazioni (`RegexTransformationGraph`) contiene:
-
-- **Nodi**: Rappresentano gli stati intermedi delle stringhe.
-- **Archi**: Indicano quale regola ha generato ogni trasformazione.
-- **Metadati**: Informazioni come conteggi, tempi di esecuzione e conflitti.
-
-### 4. Integrazione con Neo4j (Opzionale)
-
-Esporta il grafo delle trasformazioni in Neo4j per analisi avanzate:
-
-```csharp
-var graphBuilder = new GraphBuilder(grafoTrasformazioni);
-var cypherGenerator = new CypherQueryGenerator(graphBuilder);
-var batchQueries = cypherGenerator.GenerateBatchQueries();
-// Esegui batchQueries su un database Neo4j
-```
-
-## 🛠 Struttura del Progetto
+## 📦 Struttura del Progetto
 
 ```
 RegexNodeGraph/
 ├── src/
 │   ├── Connection/
-│   │   └── Neo4jConnection.cs        // Connessione e operazioni con Neo4j 
+│   │   └── Neo4jConnection.cs
 │   ├── Graph/
 │   │   ├── AggregatedTransactionsNode.cs
 │   │   ├── DetailedTransactionNode.cs
-│   │   ├── TransformationEdge.cs
 │   │   ├── MembershipEdge.cs
-│   │   ├── GraphBuilder.cs           // Costruzione del grafo delle trasformazioni 
-│   │   └── RegexTransformationGraph.cs
-│   ├── RegexDescription.cs            // Definizione delle singole regole
-│   ├── RegexDebugData.cs              // Dati di debug sulle esecuzioni delle regole
-│   ├── RegexHelper.cs                 // Metodi di utilità per la sintassi delle regex
-│   ├── RegexRuleBuilder.cs            // Costruzione fluida di regole
-│   └── GenericCategorization.cs       // Processo di applicazione delle regole e costruzione del grafo
+│   │   ├── TransformationEdge.cs
+│   │   └── TransformationGraph.cs       // ex RegexTransformationGraph
+│   ├── RegexRules/
+│   │   ├── RegexDescription.cs          // DTO
+│   │   ├── RegexTransformationRule.cs   // logica Apply/Simulate
+│   │   └── RegexRuleBuilder.cs
+│   ├── Runtime/
+│   │   ├── RegexDebugData.cs
+│   │   └── RegexHelper.cs
+│   └── Application/
+│       └── GenericCategorization.cs     // pipeline e orchestrazione
 ├── tests/
-│   ├── RegexTesterTests.cs            // Test per il core delle regex
-│   ├── TransformationGraphTests.cs    // Test per la struttura del grafo
-│   └── ...
-├── README.md                           // Documentazione
-├── RegexNodeGraph.sln                      // Soluzione Visual Studio
-├── LICENSE                             // Licenza MIT
-└── RegexNodeGraph.nuspec                   // Configurazione per il pacchetto NuGet
+│   ├── RegexRulesTests.cs
+│   └── TransformationGraphTests.cs
+├── README.md
+├── LICENSE
+└── RegexNodeGraph.sln
 ```
 
-## 📚 Esempio di Utilizzo
+---
+
+## 🚀 Quickstart
+
+### 1. Definizione delle Regole (DTO)
 
 ```csharp
-// Definizione delle regole di trasformazione
-var builder = new RegexRuleBuilder()
-    .Add(@"(pizza)", "panino", "Sostituzione di 'pizza' con 'panino'")
-    .Categorize("Cibo")
-    .Add(@"(\d{4}-\d{2}-\d{2})", "DATA", "Mascheramento delle date")
-    .Build();
+using RegexNodeGraph.RegexRules;
 
-// Creazione della pipeline e applicazione delle regole
-var categorization = new GenericCategorization(builder);
-var listaDiStringhe = new List<string> {
-    "Ho ordinato una pizza il 2024-11-03",
-    "Nessuna data qui" 
+// Crei descrizioni "pure" di regole
+var descriptions = new List<RegexDescription> {
+    new RegexDescription(@"(pizza)", "panino", ConfigOptions.NonUscireInCasoDiMatch) { Description = "Sostituisce pizza" },
+    new RegexDescription(@"(\d{4}-\d{2}-\d{2})", "DATA", ConfigOptions.EsciInCasoDiMatch)
 };
-
-var risultato = categorization.CategorizeDescriptions(listaDiStringhe);
-
-// Accesso ai risultati
-var testiFinali = risultato.Transformate; 
-var grafoTrasformazioni = risultato.Graph;
-
-// Stampa dei risultati
-foreach(var testo in testiFinali)
-{
-    Console.WriteLine(testo);
-}
-
-// Utilizzo del grafo per analisi avanzate
-var graphBuilder = new GraphBuilder(grafoTrasformazioni);
-var cypherGenerator = new CypherQueryGenerator(graphBuilder);
-var batchQueries = cypherGenerator.GenerateBatchQueries();
-// Esegui batchQueries su Neo4j
 ```
+
+### 2. Creazione delle Regole Eseguibili
+
+```csharp
+using RegexNodeGraph.RegexRules;
+using RegexNodeGraph.Graph.GraphCore;
+
+// Factory o builder per trasformare DTO → motore
+var rules: List<ITransformationRule> = descriptions
+    .Select(desc => new RegexTransformationRule(
+        pattern: desc.From,
+        replacement: desc.To,
+        name: desc.Description,
+        categories: desc.Categories,
+        opts: desc.ConfigOptions
+    ))
+    .Cast<ITransformationRule>()
+    .ToList();
+```
+
+### 3. Costruzione del Grafo
+
+```csharp
+using RegexNodeGraph.Graph.Processing;
+using RegexNodeGraph.Model;
+
+var texts = new List<string> { "Ho ordinato una pizza il 2025-04-26" };
+var descriptions = texts.Select(t => new Description(t)).ToList();
+
+// Applichi regole e costruisci il grafo
+var graph = new TransformationGraph();
+graph.BuildGraph(descriptions, descriptionsOfType<RegexDescription>());
+```
+
+### 4. Analisi e Debug
+
+```csharp
+// Ottieni report debug
+string report = GenericCategorization.GenerateDebugReportForTransaction(descriptions[0], graph);
+Console.WriteLine(report);
+```
+
+---
+
+## 🛠 Integrazione con Neo4j (Opzionale)
+
+```csharp
+using RegexNodeGraph.Graph.Processing;
+using RegexNodeGraph.Connection;
+
+// Costruisci query Cypher dal grafo
+var cypher = new CypherQueryGenerator(graph).GenerateCypherQueries();
+
+// Esegui su Neo4j
+using var conn = new Neo4jConnection("bolt://localhost:7687", "user", "pwd");
+await new GraphBuilder(false)
+    .ExecuteQueriesAsync(conn.Driver);
+```
+
+---
 
 ## 🔍 Analisi dei Risultati
 
@@ -164,22 +159,33 @@ var batchQueries = cypherGenerator.GenerateBatchQueries();
 - **Neo4j.Driver (opzionale)**: Integrazione con database Neo4j.
 - **Telerik UI (opzionale)**: Componenti UI aggiuntivi.
 
+---
+
+## 📚 Changelog
+
+### [0.7.0] - 2025-04-26
+- **Architettura**: separata la logica di regex (RegexTransformationRule) dal modello a grafo (TransformationGraph).
+- **DTO vs Logic**: RegexDescription ora funge solo da DTO per pattern e metadata.
+- **Interfaccia `ITransformationRule`**: unifica Apply, Simulate, Apply(string).
+- **Refactoring**: renaming di RegexTransformationGraph → TransformationGraph.
+- **Namespace**: spostate classi in `RegexRules`, `Graph`, `Graph.Processing` per chiarezza.
+- **Compatibilità**: mantienuti riferimenti a RegexDescription in edge per preservare From/To.
+
+### [0.6.0] - 2025-01-26
+- Prima release: motore di trasformazione a grafo basato su regex, con tracciamento dettagliato.
+
+---
+
 ## 🤝 Contribuisci
 
-RegexNodeGraph è un progetto open-source e le tue idee sono fondamentali per la sua crescita! Ecco come puoi contribuire:
-
-1. **Forka il repository**
-2. **Crea un branch** per la tua modifica
-3. **Implementa la tua modifica**
-4. **Invia una Pull Request**
-
-Tutti i suggerimenti per migliorare RegexNodeGraph, aggiungere nuove regole o ottimizzare la pipeline di trasformazione sono benvenuti!
+RegexNodeGraph è un progetto open-source: invia PR, suggerisci miglioramenti o nuovi tipi di regole!  
 
 ## 📄 Licenza
 
-RegexNodeGraph è rilasciato sotto licenza [MIT](LICENSE). Puoi utilizzarlo liberamente sia in contesti personali che commerciali, nel rispetto della licenza.
+Rilasciato sotto **MIT License**.  
+Buon coding con **RegexNodeGraph**!  
 
----
+
 
 > **"La potenza di una pipeline di testo si misura dalla chiarezza di ogni suo passaggio"**  
 > – Anonimo

@@ -1,7 +1,9 @@
-﻿using PostSharp.Aspects;
+﻿using System.Diagnostics;
+using PostSharp.Aspects;
 using PostSharp.Serialization;
 using Sentry;
-using System.Diagnostics;
+
+namespace RegexNodeGraph;
 
 [PSerializable]
 public class SentryTracingAspect : OnMethodBoundaryAspect

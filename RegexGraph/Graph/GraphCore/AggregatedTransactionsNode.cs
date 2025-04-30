@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using RegexNodeGraph.Model;
 
-namespace RegexNodeGraph.Runtime.Graph.Model;
+namespace RegexNodeGraph.Graph.GraphCore;
 
 public class AggregatedTransactionsNode : GraphNode
 {

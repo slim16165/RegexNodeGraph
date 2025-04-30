@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RegexNodeGraph.Runtime.Graph.Model;
+using RegexNodeGraph.Graph.GraphCore;
+using RegexNodeGraph.Model;
 
-namespace RegexNodeGraph.Runtime.Graph;
+namespace RegexNodeGraph.Graph.Processing;
 
 public class CypherQueryGenerator
 {
-    private readonly RegexTransformationGraph _graph;
+    private readonly TransformationGraph _graph;
     private readonly StringBuilder _sb = new StringBuilder();
 
-    public CypherQueryGenerator(RegexTransformationGraph graph)
+    public CypherQueryGenerator(TransformationGraph graph)
     {
         _graph = graph;
     }
@@ -78,16 +79,19 @@ public class CypherQueryGenerator
             {
                 belongsToRelations.Add($"{{fromId: {memberEdge.SourceNode.Id}, toId: {memberEdge.TargetNode.Id}}}");
             }
-            else if (edge is TransformationEdge transEdge)
+            else if (edge is TransformationEdge { Rule: IRegexRuleMetadata meta1 } transEdge)
             {
-                var escapedRegex = transEdge.RegexRule.From.Replace("'", "\\'");
+                string regexFrom = GetRegexFrom(edge);
+                var escapedRegex = EscapeForCypher(regexFrom);
+
                 aggregatedTransformsRelations.Add($"{{fromId: {transEdge.SourceNode.Id}, toId: {transEdge.TargetNode.Id}, regex: '{escapedRegex}', count: {transEdge.TransformationCount}}}");
             }
-            else if (edge is DetailTransformationEdge detailEdge)
+            else if (edge is DetailTransformationEdge { Rule: IRegexRuleMetadata meta2 } detailEdge)
             {
-                var escapedRegex = detailEdge.RegexRule.From.Replace("'", "\\'");
+                var escapedRegex = EscapeForCypher(meta2.From);
                 detailTransformsRelations.Add($"{{fromId: {detailEdge.SourceNode.Id}, toId: {detailEdge.TargetNode.Id}, regex: '{escapedRegex}'}}");
             }
+
         }
 
         belongsToRelations = belongsToRelations.Distinct().ToList();
@@ -144,6 +148,15 @@ public class CypherQueryGenerator
         return _sb.ToString();
     }
 
+    public static string EscapeForCypher(string s)
+        => s
+            .Replace("\\", "\\\\")
+            .Replace("'", "\\'")
+            .Replace("\"", "\\\"")
+            .Replace("\r\n", "\\n")
+            .Replace("\n", "\\n");
+
+
     private void GenerateConstraints()
     {
         _sb.AppendLine("// Vincoli di unicità");
@@ -161,4 +174,10 @@ public class CypherQueryGenerator
             _ => "Node"
         };
     }
+
+    private static string GetRegexFrom(GraphEdge edge)
+    {
+        return edge.Rule is IRegexRuleMetadata meta ? meta.From : "";
+    }
+
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using RegexNodeGraph.Runtime.Graph.Model;
+using RegexNodeGraph.Model;
 
-namespace RegexNodeGraph.Runtime;
+namespace RegexNodeGraph.RegexRules;
 
 public static class RegexHelper
 {
@@ -66,28 +66,35 @@ public static class RegexHelper
         return match.Success ? match.Groups[1].Value.Split('|') : [];
     }
 
-    public static (RegexDebugData res, Description description) ApplyReplacement(this RegexDescription rule, Description description)
+    public static (TransformationDebugData, Description) ApplyReplacement(this TransformationRuleBase rule,
+        Description description)
+    {
+        if (rule is RegexTransformationRule regexTransformationRule)
+            return ApplyReplacement(regexTransformationRule, description);
+        
+        throw new InvalidOperationException("Il tipo di regola non è supportato.");
+    }
+
+
+    public static (TransformationDebugData res, Description description) ApplyReplacement(this RegexTransformationRule rule, Description description)
     {
         // Utilizziamo CurrentDescription dalla classe
         string input = description.CurrentDescription ?? string.Empty;
-        string output = input;
         // Reset del flag HasChangedNow prima dell'applicazione della regola
         description.HasChangedNow = false;
 
         Stopwatch stopwatch = Stopwatch.StartNew();
 
-        bool isMatch = rule.RegexFrom.IsMatch(input);
-        if (isMatch)
-        {
-            output = rule.RegexFrom.Replace(input, rule.To);
-        }
+        var output = rule.RegexFrom.Replace(input, rule.To);
+        bool isMatch = !ReferenceEquals(input, output);   // oppure input != output
+
 
         Console.WriteLine($"Applying regex: {rule.RegexFrom} with IgnoreCase: {rule.RegexFrom.Options.HasFlag(RegexOptions.IgnoreCase)}; Input: {input}; Match found: {isMatch}; Output after replacement: {output}");
 
 
         stopwatch.Stop();
 
-        var res = new RegexDebugData(input, rule, output, isMatch);
+        var res = new TransformationDebugData(input, rule, output, isMatch);
 
         if (isMatch && output != input)
         {
@@ -122,7 +129,7 @@ public static class RegexHelper
     }
 
 
-    public static RegexDebugData ApplyReplacement(this RegexDescription rule, string input)
+    public static TransformationDebugData ApplyReplacement(this RegexTransformationRule rule, string input)
     {
         input ??= "";
         string output = input;
@@ -135,7 +142,7 @@ public static class RegexHelper
 
         stopwatch.Stop();
 
-        var res = new RegexDebugData(input, rule, output, isMatch);
+        var res = new TransformationDebugData(input, rule, output, isMatch);
 
         if (isMatch /*output != input*/)
         {
@@ -153,16 +160,14 @@ public static class RegexHelper
         return res;
     }
 
-    public static RegexDebugData SimulateApplication(this RegexDescription r, string input)
+    public static TransformationDebugData SimulateApplication(this RegexTransformationRule r, string input)
     {
         input ??= "";
-        string output = input;
 
-        bool isMatch = r.RegexFrom.IsMatch(input);
-        if (isMatch)
-            output = r.RegexFrom.Replace(input, r.To);
+        string output = r.RegexFrom.Replace(input, r.To);
+        bool isMatch = !ReferenceEquals(input, output);   // oppure input != output
 
-        var res = new RegexDebugData(input, r, output, isMatch);
+        var res = new TransformationDebugData(input, r, output, isMatch);
 
         return res;
     }

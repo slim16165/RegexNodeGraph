@@ -1,4 +1,4 @@
-﻿namespace RegexNodeGraph.Runtime.Graph.Model;
+﻿namespace RegexNodeGraph.Model;
 
 public class Description
 {
