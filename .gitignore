@@ -121,3 +121,5 @@ _ReSharper*/
 *.sln.iml
 /RegexGraph/CombinedFile.cs
 CombinedFile.cs
+/RegexGraph.Test/obj/project.assets.json
+/RegexGraph.Test/obj/project.nuget.cache

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RegexNodeGraph;
-using RegexNodeGraph.Runtime;
-using RegexNodeGraph.Runtime.Graph;
+using RegexNodeGraph.Application;
+using RegexNodeGraph.RegexRules;
 
 namespace UnitTestProject1
 {
@@ -81,9 +81,9 @@ namespace UnitTestProject1
             Action<BankTransaction, string> setCategory = (t, category) => t.Category = category;
             List<string> uniqueDescriptions = transactions.Select(getDescription).Distinct().ToList();
 
-            var (transactionDescriptions, graph1) = await genericCategorization.CategorizeDescriptions(uniqueDescriptions);
+            var (transactionDescriptions, graph1) = await genericCategorization.CategorizeDescriptionsAsync(uniqueDescriptions);
 
-            await GenericCategorization.SetCategoryOnOriginalItems(transactions, getDescription, setCategory, transactionDescriptions, graph1);
+            await GenericCategorization.SetCategoryOnOriginalItemsAsync(transactions, getDescription, setCategory, transactionDescriptions, graph1);
 
             GenericCategorization.GenerateAndLogCypherQueries(graph1, transactionDescriptions);
             var (categorizedTransactions, graph) = ((List<BankTransaction>, RegexTransformationGraph))(transactions, graph: graph1);
