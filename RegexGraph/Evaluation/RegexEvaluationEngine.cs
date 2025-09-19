@@ -31,14 +31,14 @@ public sealed class RegexEvaluationEngine : IRegexEvaluationEngine
     public Task<RegexEvaluationReport> EvaluateAllAsync(RegexEvaluationRequest request, CancellationToken ct = default)
     {
         if (request is null) throw new ArgumentNullException(nameof(request));
-        return Task.FromResult(EvaluateAllCore(request, ct));
+        return Task.Run(() => EvaluateAllCore(request, ct), ct);
     }
 
     public Task<RegexEvaluationReport> EvaluateRuleAsync(RegexEvaluationRequest request, RegexTransformationRule rule, CancellationToken ct = default)
     {
         if (request is null) throw new ArgumentNullException(nameof(request));
         if (rule is null) throw new ArgumentNullException(nameof(rule));
-        return Task.FromResult(EvaluateRuleCore(request, rule, ct));
+        return Task.Run(() => EvaluateRuleCore(request, rule, ct), ct);
     }
 
     public RegexEvaluationReport EvaluateAll(IEnumerable<RegexTransformationRule> rules, IEnumerable<string> texts)

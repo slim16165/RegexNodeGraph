@@ -94,17 +94,98 @@ public class RegexEvaluationEngineTests
     }
 
     [TestMethod]
-    public async Task EvaluateAllAsync_ThrowsWhenCancelled()
+    public async Task EvaluateAllAsync_DoesNotCompleteSynchronouslyWhileProcessing()
     {
-        var rule = new RegexTransformationRule("pizza", "FOOD", ConfigOptions.NonUscireInCasoDiMatch);
-        var samples = Enumerable.Range(0, 5).Select(i => new RegexSample($"sample {i}")).ToList();
-        var request = new RegexEvaluationRequest(new[] { rule }, samples);
+        using var gate = new ManualResetEventSlim(initialState: false);
+        var rule = new RegexTransformationRule("pizza", "FOOD", ConfigOptions.NonUscireInCasoDiMatch)
+        {
+            RegexFrom = new BlockingRegex("pizza", gate)
+        };
+
+        var samples = new[]
+        {
+            new RegexSample("Ho mangiato una pizza", "s1"),
+            new RegexSample("Pizza al taglio", "s2")
+        };
+
+        var request = new RegexEvaluationRequest(new[] { rule }, samples, recompileExpressions: false, useRegexCache: false);
+        var engine = CreateEngine();
+
+        var evaluationTask = engine.EvaluateAllAsync(request);
+
+        Assert.IsFalse(evaluationTask.IsCompleted, "The asynchronous evaluation should not complete before returning.");
+
+        await Task.Delay(50);
+        Assert.IsFalse(evaluationTask.IsCompleted, "The asynchronous evaluation should still be running while the regex is blocked.");
+
+        gate.Set();
+
+        var report = await evaluationTask;
+        Assert.AreEqual(1, report.RuleResults.Count);
+        Assert.AreEqual(2, report.RuleResults[0].SampleResults.Count);
+    }
+
+    [TestMethod]
+    public async Task EvaluateAllAsync_ThrowsWhenCancelledAfterStart()
+    {
+        using var gate = new ManualResetEventSlim(initialState: false);
+        var rule = new RegexTransformationRule("pizza", "FOOD", ConfigOptions.NonUscireInCasoDiMatch)
+        {
+            RegexFrom = new BlockingRegex("pizza", gate)
+        };
+
+        var samples = new[]
+        {
+            new RegexSample("Ho mangiato una pizza", "s1"),
+            new RegexSample("Pizza al taglio", "s2")
+        };
+
+        var request = new RegexEvaluationRequest(new[] { rule }, samples, recompileExpressions: false, useRegexCache: false);
         var engine = CreateEngine();
 
         using var cts = new CancellationTokenSource();
-        cts.Cancel();
+        var evaluationTask = engine.EvaluateAllAsync(request, cts.Token);
 
-        await Assert.ThrowsExceptionAsync<OperationCanceledException>(() => engine.EvaluateAllAsync(request, cts.Token));
+        Assert.IsFalse(evaluationTask.IsCompleted, "The task should not be completed before the asynchronous work starts.");
+
+        await Task.Delay(50);
+        cts.Cancel();
+        Assert.IsFalse(evaluationTask.IsCompleted, "Cancellation should be observed asynchronously.");
+
+        gate.Set();
+
+        await Assert.ThrowsExceptionAsync<OperationCanceledException>(async () => await evaluationTask);
+    }
+
+    private sealed class BlockingRegex : Regex
+    {
+        private readonly ManualResetEventSlim _gate;
+
+        public BlockingRegex(string pattern, ManualResetEventSlim gate)
+            : base(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase)
+        {
+            _gate = gate ?? throw new ArgumentNullException(nameof(gate));
+        }
+
+        private void WaitIfNeeded()
+        {
+            if (!_gate.IsSet)
+            {
+                _gate.Wait();
+            }
+        }
+
+        public override Match Match(string input)
+        {
+            WaitIfNeeded();
+            return base.Match(input);
+        }
+
+        public override string Replace(string input, string replacement)
+        {
+            WaitIfNeeded();
+            return base.Replace(input, replacement);
+        }
     }
 
     [TestMethod]
