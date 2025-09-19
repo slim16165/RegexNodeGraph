@@ -17,7 +17,7 @@ public sealed class RegexSample
         {
             null => EmptyMetadata,
             ReadOnlyDictionary<string, object?> readOnly => readOnly,
-            _ => new ReadOnlyDictionary<string, object?>(new Dictionary<string, object?>(metadata))
+            _ => new ReadOnlyDictionary<string, object?>(new Dictionary<string, object?>((IDictionary<string, object?>)metadata))
         };
     }
 
